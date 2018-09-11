@@ -11,7 +11,6 @@ class WebpageHandler {
         let element = $('.unit');
         element.text("");
         element.append(unitString);
-
     }
 
     addRecipeField() {
@@ -31,13 +30,13 @@ class WebpageHandler {
         $('.middle').append(p);
         $('#searchfield').val("");
         console.log("searching");
-        getIngridientList();
     }
 
-    autoComplete() {
-        let list = getIngridientList();
+    autoComplete(list) {
+        /*let list = getIngridientList();*/
         $('.ingredient').autocomplete({
             source: list
         });
+        $('.ui-helper-hidden-accessible').css('display', 'none');
     }
 }

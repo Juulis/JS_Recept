@@ -1,17 +1,19 @@
 $(document).ready(function () {
     let webpageHandler = new WebpageHandler();
-
+    let list = getIngridientList();
     $('#searchBtn').on('click', webpageHandler.search);
 
     $('#add_recipe_field').on('click', function () {
         webpageHandler.addRecipeField();
         webpageHandler.addOptions();
+    $('.ingredient').on('focus', webpageHandler.autoComplete(list));
+
     });
 
     $('#input-submit').on('click', submitRecipe);
 
     webpageHandler.addOptions();
-    $('.ingredient').on('focus', webpageHandler.autoComplete());
+    $('.ingredient').on('focus', webpageHandler.autoComplete(list));
 
 
 });

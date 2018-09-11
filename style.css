@@ -151,124 +151,163 @@ nav .dropdown-item:hover {
 /* Forms
 -------------------------------------------------------------------------------*/
 
-@import url(https://fonts.googleapis.com/css?family=Merriweather);
+@import url(https: //fonts.googleapis.com/css?family=Merriweather);
+
 *,
 *:before,
 *:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 
 main h1 {
-    padding-top:30px;
-  text-align: center;
-  color: #a8a8a8;
-  text-shadow: 1px 1px 0 white;
+    padding-top: 30px;
+    text-align: center;
+    color: #a8a8a8;
+    text-shadow: 1px 1px 0 white;
 }
 
 main form {
-  max-width: 900px;
-  text-align: center;
-  margin: 20px auto;
-}
-main form input,
-form div textarea, form div button, .ingredient_member {
-  border: 0;
-  outline: 0;
-  padding: 1em;
-  -moz-border-radius: 8px;
-  -webkit-border-radius: 8px;
-  border-radius: 8px;
-  display: block;
-  width: 100%;
-  margin-top: 1em;
-  font-family: "Merriweather", sans-serif;
-  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-  resize: none;
-}
-form input:focus,
-form textarea:focus {
-  -moz-box-shadow: 0 0px 2px #e74c3c !important;
-  -webkit-box-shadow: 0 0px 2px #e74c3c !important;
-  box-shadow: 0 0px 2px #e74c3c !important;
-}
-form #input-submit, form div button {
-  color: rgba(92, 92, 92, 0.541);
-  background: #faca48;
-  cursor: pointer;
-  font-size:20px;
-  font-weight: bold;
-}
-form div button{
-    font-size: 15px;
-    width:auto;
-}
-form #input-submit:hover {
-  -moz-box-shadow: 0 1px 1px 1px rgba(170, 170, 170, 0.6);
-  -webkit-box-shadow: 0 1px 1px 1px rgba(170, 170, 170, 0.6);
-  box-shadow: 0 1px 1px 1px rgba(170, 170, 170, 0.6);
-}
-form textarea {
-  height: 300px;
+    max-width: 900px;
+    text-align: center;
+    margin: 20px auto;
 }
 
-#ingriedients{
-    display:block;
+main form input,
+form div textarea, form div button, .ingredient_member {
+    border: 0;
+    outline: 0;
+    padding: 1em;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    display: block;
+    width: 100%;
+    margin-top: 1em;
+    font-family: "Merriweather", sans-serif;
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    resize: none;
 }
-.ingredient_member{
-    display:inline;
-    width:auto;
+
+form input:focus,
+form textarea:focus {
+    -moz-box-shadow: 0 0px 2px #e74c3c !important;
+    -webkit-box-shadow: 0 0px 2px #e74c3c !important;
+    box-shadow: 0 0px 2px #e74c3c !important;
+}
+
+form #input-submit, form div button {
+    color: rgba(92, 92, 92, 0.541);
+    background: #faca48;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+form div button {
+    font-size: 15px;
+    width: auto;
+}
+
+form #input-submit:hover {
+    -moz-box-shadow: 0 1px 1px 1px rgba(170, 170, 170, 0.6);
+    -webkit-box-shadow: 0 1px 1px 1px rgba(170, 170, 170, 0.6);
+    box-shadow: 0 1px 1px 1px rgba(170, 170, 170, 0.6);
+}
+
+form textarea {
+    height: 300px;
+}
+
+#ingriedients {
+    display: block;
+}
+
+.ingredient_member {
+    display: inline;
+    width: auto;
 }
 
 
 .half {
-  float: left;
-  width: 48%;
-  margin-bottom: 1em;
+    float: left;
+    width: 48%;
+    margin-bottom: 1em;
 }
 
 .right {
-  width: 50%;
+    width: 50%;
 }
 
 .left {
-  margin-right: 2%;
+    margin-right: 2%;
 }
 
 @media (max-width: 480px) {
-  .half {
-    width: 100%;
-    float: none;
-    margin-bottom: 0;
-  }
+    .half {
+        width: 100%;
+        float: none;
+        margin-bottom: 0;
+    }
 }
+
 /* Clearfix */
 .cf:before,
 .cf:after {
-  content: " ";
-  /* 1 */
-  display: table;
-  /* 2 */
+    content: " ";
+    /* 1 */
+    display: table;
+    /* 2 */
 }
 
 .cf:after {
-  clear: both;
+    clear: both;
 }
+/*autocomplete settings*/
 
 .ui-autocomplete {
-    border: 1px,solid,#a8a8a8;
-    font-variant-position: super;
-    width:600px;
+    padding-top:15px;
+    padding-bottom:15px;
+    border-radius: 16px;
+    width: 600px;
     background: #f7dc85;
     font-size: 20px;
     font-family: 'Times New Roman', Times, serif;
+    max-height: 300px;
+    scroll-behavior: smooth;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 20px;
+    color: rgb(61, 61, 61);
+
 }
-.ui-autocomplete li:nth-child(2n){
+
+.ui-autocomplete li:nth-child(2n) {
     background: beige;
     border: #BFF08E;
-    color:rgb(61, 61, 61);
+}
+
+
+.ui-autocomplete::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+.ui-autocomplete::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+.ui-autocomplete::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(177, 100, 0, 0.3);
+    background-color: #d8ad1f;
 }
