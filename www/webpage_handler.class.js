@@ -60,6 +60,7 @@ class WebpageHandler {
             });
             ingredients.push(ingredient);
             console.log(ingredients);
+            
         });
     }
 }
