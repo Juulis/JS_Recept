@@ -1,5 +1,4 @@
 let recipies = [{
-        id: 1,
         name: "Korv stroganoff",
         ingredients: [{
             item: "salt",
@@ -7,12 +6,16 @@ let recipies = [{
             unit: "krdm"
         }, {
             item: "korv",
-            amount: "2"
+            amount: "2",
+            unit: "st"
+        }, {
+            item: "ketchup",
+            amount: "2",
+            unit: "dl"
         }],
-        description: "Blanda alla ingridientser! Bla bla bla bla"
+        description: "Blanda alla ingridientser! Värm tills du är nöjd!"
     },
     {
-        id: 2,
         name: "Pannkakor",
         ingredients: [{
             item: "ägg",

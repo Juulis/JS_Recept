@@ -1,106 +1,19 @@
 $(document).ready(function () {
     let webpageHandler = new WebpageHandler();
-    let list = getIngridientList();
-    $('#searchBtn').on('click', webpageHandler.search);
-
-    $('#add_recipe_field').on('click', function () {
-        webpageHandler.addRecipeField();
-        webpageHandler.addOptions();
-    $('.ingredient').on('focus', webpageHandler.autoComplete(list));
-
-    });
-
-    $('#input-submit').on('click', submitRecipe);
+    let recipeHandler = new RecipeHandler();
 
     webpageHandler.addOptions();
-    $('.ingredient').on('focus', webpageHandler.autoComplete(list));
 
+    let list = recipeHandler.getIngridientList();
 
-});
+    $('#searchBtn').on('click', webpageHandler.search);
 
-
-
-function submitRecipe() {
-
-    $('Form').submit(function () {
-        let $inputs = $('.ingredient_member');
-        let values = {};
-        $inputs.each(function () {
-            values.ingredient = ($(this).val());
-        });
+    $('#add_recipe_field').on('click', function(){
+     webpageHandler.addRecipeField(list);
     });
 
-}
+    $('#input-submit').on('click', webpageHandler.submitRecipe);
 
-function getIngridientList(){
-    let list = [];
-    let json = (function () {
-        let json = null;
-        $.ajax({
-            'async': false,
-            'global': false,
-            'url': '/livsmedelsdata.json',
-            'dataType': "json",
-            'success': function (data) {
-                json = data;
-            }
-        });
-        for(let item of json){
-            list.push(item.Namn);
-        }
-    })(); 
-    return list;
-}
-
-/*
-function getIngridientList() {
-    $.getJSON('/livsmedelsdata.json', start);
-
-    let list = [];
-
-    function start(ingredient) {
-        for (let item of ingredient) {
-            list.push(item.Namn);
-        }
-        console.log("returnerar lista", list);
-        return list;
-    }
-}
-*/
-
-function wait(x) {
-    setTimeout(function () {
-        wait();
-    }, x);
-    console.log("waiting");
-}
-
-function getJsonList() {
-    let ourData = "";
-    let ourRequest = new XMLHttpRequest();
-    ourRequest.open('GET', '/livsmedelsdata.json');
-    ourRequest.onload = function () {
-        ourData = JSON.parse(ourRequest.responseText);
-    };
-    ourRequest.send();
-    return ourData;
-}
-
-/* creating list from json
-function getIngridientList() {
-    $.getJSON('/livsmedelsdata.json', start);
-
-    function start(ingredient) {
-        let ul = $('<ul></ul>');
-        ul.addClass('recipe');
-        for (let item of ingredient) {
-            let li = $('<li></li>');
-            li.text(item.Namn);
-            li.data('Ingredient', item);
-            ul.append(li);
-        }
-        $('.middle').append(ul);
-    }
-
-
-}*/
+    $('.ingredient').on('focus', webpageHandler.autoComplete(list));
+    
+});
