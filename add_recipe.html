@@ -7,12 +7,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lägg till recept</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/style.css">
+    <script src="/webpage_handler.class.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
     <script src="/main.js"></script>
     <script src="/recepies.js"></script>
+    <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
@@ -64,38 +66,34 @@
                     <h1>Lägg till recept</h1>
                     <form class="cf">
                         <input type="text" class="recipe_name" placeholder="Maträtt">
-                            <div id="ingredients" class="half left cf">
-                                <div class="ingredient_group">
-                                    <input type="text" name="ingredient" class="ingredient ingredient_member"
-                                        placeholder="Ingredient">
-                                    <input type="text" name="amount" class="amount ingredient_member" placeholder="Mängd">
-                                    <select type="text" name="unit" class="unit ingredient_member" placeholder="Enhet">
-                                </div>
-                                <div class="ingredient_group">
-                                    <input type="text" name="ingredient" class="ingredient ingredient_member"
-                                        placeholder="Ingredient">
-                                    <input type="text" name="amount" class="amount ingredient_member" placeholder="Mängd">
-                                    <select type="text" name="unit" class="unit ingredient_member" placeholder="Enhet">
-                                </div>
-                                <div class="ingredient_group">
-                                    <input type="text" name="ingredient" class="ingredient ingredient_member"
-                                        placeholder="Ingredient">
-                                    <input type="text" name="amount" class="amount ingredient_member" placeholder="Mängd">
-                                    <select type="text" name="unit" class="unit ingredient_member" placeholder="Enhet">
-                                </div>
-                                <div class="ingredient_group">
-                                    <input type="text" name="ingredient" class="ingredient ingredient_member"
-                                        placeholder="Ingredient">
-                                    <input type="text" name="amount" class="amount ingredient_member" placeholder="Mängd">
-                                    <select type="text" name="unit" class="unit ingredient_member" placeholder="Enhet"></select>
-                                </div>
-                                <button type="button" id="add_recipe_field">Fler ingredienter</button>
+                        <div id="ingredients" class="half left cf">
+                            <div class="ingredient_group">
+                                <input type="text" name="ingredient" class="ingredient ingredient_member" placeholder="Ingredient">
+                                <input type="text" name="amount" class="amount ingredient_member" placeholder="Mängd">
+                                <select type="text" name="unit" class="unit ingredient_member" placeholder="Enhet">
                             </div>
+                            <div class="ingredient_group">
+                                <input type="text" name="ingredient" class="ingredient ingredient_member" placeholder="Ingredient">
+                                <input type="text" name="amount" class="amount ingredient_member" placeholder="Mängd">
+                                <select type="text" name="unit" class="unit ingredient_member" placeholder="Enhet">
+                            </div>
+                            <div class="ingredient_group">
+                                <input type="text" name="ingredient" class="ingredient ingredient_member" placeholder="Ingredient">
+                                <input type="text" name="amount" class="amount ingredient_member" placeholder="Mängd">
+                                <select type="text" name="unit" class="unit ingredient_member" placeholder="Enhet">
+                            </div>
+                            <div class="ingredient_group">
+                                <input type="text" name="ingredient" class="ingredient ingredient_member" placeholder="Ingredient">
+                                <input type="text" name="amount" class="amount ingredient_member" placeholder="Mängd">
+                                <select type="text" name="unit" class="unit ingredient_member" placeholder="Enhet"></select>
+                            </div>
+                            <button type="button" id="add_recipe_field">Fler ingredienter</button>
+                        </div>
 
-                            <div class="half right cf">
-                                <textarea name="instruction" type="text" id="input-message" placeholder="Message"></textarea>
-                            </div>
-                            <input type="submit" value="Submit" id="input-submit">
+                        <div class="half right cf">
+                            <textarea name="instruction" type="text" id="input-message" placeholder="Message"></textarea>
+                        </div>
+                        <input type="submit" value="Submit" id="input-submit">
                     </form>
                 </main>
             </div>

@@ -258,3 +258,17 @@ form textarea {
 .cf:after {
   clear: both;
 }
+
+.ui-autocomplete {
+    border: 1px,solid,#a8a8a8;
+    font-variant-position: super;
+    width:600px;
+    background: #f7dc85;
+    font-size: 20px;
+    font-family: 'Times New Roman', Times, serif;
+}
+.ui-autocomplete li:nth-child(2n){
+    background: beige;
+    border: #BFF08E;
+    color:rgb(61, 61, 61);
+}

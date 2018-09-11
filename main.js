@@ -1,63 +1,90 @@
 $(document).ready(function () {
+    let webpageHandler = new WebpageHandler();
 
-    $('#searchBtn').on('click', search);
-    $('#add_recipe_field').on('click', addRecipeField);
-    $('#input-submit').on('click', submitRecipe);
-    addOptions();
-});
+    $('#searchBtn').on('click', webpageHandler.search);
 
-function addOptions() {
-    let units = ["dl", "cl", "ml", "msk", "krdm", "kg", "g", "st", "liter"];
-    let unitString = "";
-
-    units.forEach(function (unit) {
-        unitString += '<option value="' + unit + '">' + unit + '</option>';
+    $('#add_recipe_field').on('click', function () {
+        webpageHandler.addRecipeField();
+        webpageHandler.addOptions();
     });
 
-    let element = $('.unit');
-    element.text("");
-    element.append(unitString);
+    $('#input-submit').on('click', submitRecipe);
 
-}
+    webpageHandler.addOptions();
+    $('.ingredient').on('focus', webpageHandler.autoComplete());
+
+
+});
+
+
 
 function submitRecipe() {
 
     $('Form').submit(function () {
-        let $inputs = $('.ingredient');
-        let values = [];
+        let $inputs = $('.ingredient_member');
+        let values = {};
         $inputs.each(function () {
-            values.push($(this).val());
+            values.ingredient = ($(this).val());
         });
-        console.log(values);
     });
 
 }
 
-function addRecipeField() {
-
-    $('.ingredient_group').last().after(`<div class="ingredient_group">
-    <input type="text" name="ingredient" class="ingredient ingredient_member"
-        placeholder="Ingredient">
-    <input type="text" name="amount" class="amount ingredient_member" placeholder="Mängd">
-    <select type="text" name="unit" class="unit ingredient_member" placeholder="Enhet">
-</div>`);
-
-    addOptions();
-
+function getIngridientList(){
+    let list = [];
+    let json = (function () {
+        let json = null;
+        $.ajax({
+            'async': false,
+            'global': false,
+            'url': '/livsmedelsdata.json',
+            'dataType': "json",
+            'success': function (data) {
+                json = data;
+            }
+        });
+        for(let item of json){
+            list.push(item.Namn);
+        }
+    })(); 
+    return list;
 }
 
+/*
+function getIngridientList() {
+    $.getJSON('/livsmedelsdata.json', start);
 
+    let list = [];
 
-function search() {
-    let field = $("#searchfield");
-    let input = field.val();
-    let p = $('<p></p>');
-    p.append(`Searching for ${input}`);
-    $('.middle').append(p);
-    $('#searchfield').val("");
-    getIngridientList();
+    function start(ingredient) {
+        for (let item of ingredient) {
+            list.push(item.Namn);
+        }
+        console.log("returnerar lista", list);
+        return list;
+    }
+}
+*/
+
+function wait(x) {
+    setTimeout(function () {
+        wait();
+    }, x);
+    console.log("waiting");
 }
 
+function getJsonList() {
+    let ourData = "";
+    let ourRequest = new XMLHttpRequest();
+    ourRequest.open('GET', '/livsmedelsdata.json');
+    ourRequest.onload = function () {
+        ourData = JSON.parse(ourRequest.responseText);
+    };
+    ourRequest.send();
+    return ourData;
+}
+
+/* creating list from json
 function getIngridientList() {
     $.getJSON('/livsmedelsdata.json', start);
 
@@ -73,27 +100,5 @@ function getIngridientList() {
         $('.middle').append(ul);
     }
 
-}
 
-function getIngredientListAjax() {
-    let ingrList = [];
-
-    $.ajax({
-        url: '/livsmedelsdata.json',
-        dataType: 'json',
-        type: 'get',
-        cache: true,
-        success: function (data) {
-            $(data).each(function (index, value) {
-                ingrList.push(value.Namn);
-            });
-        }
-    });
-    return ingrList;
-}
-
-function getSpecific() {
-    return list.find(function (element) {
-        return element == "Talg nöt";
-    });
-}
+}*/
