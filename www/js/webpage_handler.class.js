@@ -45,27 +45,39 @@ class WebpageHandler {
         let recipe = new Recipe();
         let ingredients = [];
 
-        console.log('after new recipe()');
         recipe.name = $('.recipe_name').val();
         recipe.description = $('.description').val();
 
-        $('.middle form .ingredient_group').each(function () {
+        $('.ingredient_group').each(function () {
+            let $this = $(this);
             let ingredient = new Ingredient();
-            $('.middle form input .ingredient_member').each(function () {
+            $this.children('.ingredient_member').each(function () {
                 let input = $(this);
-                if (input.val != undefined && input.val != "") {
+                let val = input.val();
+
+                if (val != undefined && val != "") {
                     if (input.attr('name') == "ingredient") {
-                        ingredient.name = input.val();
+                        ingredient.name = val;
                     } else if (input.attr('name') == "amount") {
-                        ingredient.amount = input.val();
+                        ingredient.amount = val;
                     } else if (input.attr('name') == "unit") {
-                        ingredient.unit = input.val();
+                        ingredient.unit = val;
                     }
                 }
             });
-            ingredients.push(ingredient);
+            if (ingredient != undefined && ingredient.name != undefined) {
+                ingredients.push(ingredient);
+            }
         });
         recipe.ingredients = ingredients;
-        console.log(recipe.ingredients[0]);
+        console.log(recipe);
+        this.recipeToJson('/json/recepies.json', recipe);
     }
+
+    recipeToJson(json, recipe) {
+        let jsonObj = JSON.parse(json);
+        jsonObj[recipe.name] = recipe;
+        console.log(JSON.stringify(jsonObj));
+    }
+
 }

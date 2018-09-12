@@ -1,28 +1,34 @@
 class Ingredient {
- /*   constructor(name, amount, unit) {
-        this.name = name;
-        this.amount = amount;
-        this.unit = unit;
-    }*/
+    
+    get name() {
+        return this._name;
+    }
+    get amount() {
+        return this._amount;
+    }
+    get unit() {
+        return this._unit;
+    }
 
     set name(name) {
         this.okOrError(
             'name', name,
             'must be a string with a length >= 2',
-            typeof name == 'string'
-            && name.length >= 2
+            typeof name == 'string' &&
+            name.length >= 2
         );
-        this.name = name;
+        console.log("setting name",name);
+        this._name = name;
     }
 
     set amount(amount) {
         this.okOrError(
             'amount', amount,
             'must be a string with a length >= 2',
-            typeof amount == 'string'
-            && amount.length >= 2
+            typeof amount == 'string' &&
+            amount.length >= 2
         );
-        this.amount = amount;
+        this._amount = amount;
     }
 
     set unit(unit) {
@@ -30,15 +36,17 @@ class Ingredient {
         this.okOrError(
             'unit', unit,
             `must be any of the following ${units}`,
-            typeof unit == 'string'
-            && unit.length >= 2
-            && units.includes(unit)
-    );
-        this.unit = unit;
+            typeof unit == 'string' &&
+            unit.length >= 2 &&
+            units.includes(unit)
+        );
+        this._unit = unit;
     }
 
     okOrError(propName, propVal, errorMessage, ok) {
-        if (ok) { return; }
+        if (ok) {
+            return;
+        }
         let className = this.constructor.name;
         throw (new Error(`
       Faulty value for ${className}.${propName}

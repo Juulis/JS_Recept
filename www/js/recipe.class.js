@@ -1,10 +1,4 @@
 class Recipe {
-  constructor(name, nutrition, ingredients, description) {
-    this.name = name != undefined ? name : 'default';
-    this.nutrition = name != undefined ? nutrition : [{default:'default'}];
-    this.ingredients = name != undefined ? ingredients : [{default:'default'}];
-    this.description = name != undefined ? description : 'default,default,default';
-  }
 
   get name() {
     return this._name;
@@ -23,8 +17,8 @@ class Recipe {
     this.okOrError(
       'name', name,
       'must be a string with a length >= 2',
-      typeof name == 'string'
-      && name.length >= 2
+      typeof name == 'string' &&
+      name.length >= 2
     );
     this._name = name;
   }
@@ -33,8 +27,8 @@ class Recipe {
     this.okOrError(
       'nutrition', nutrition,
       'must be an object-array with nutrition info',
-      Array.isArray(nutrition)
-      && nutrition.length >= 1
+      Array.isArray(nutrition) &&
+      nutrition.length >= 1
     );
     this._nutrition = nutrition;
   }
@@ -43,8 +37,8 @@ class Recipe {
     this.okOrError(
       'ingredients', ingredients,
       'must be an object-array with ingredients',
-      Array.isArray(ingredients)
-      && ingredients.length >= 1
+      Array.isArray(ingredients) &&
+      ingredients.length >= 1
     );
     this._ingredients = ingredients;
   }
@@ -53,14 +47,16 @@ class Recipe {
     this.okOrError(
       'description', description,
       'must be a string with a length >= 2',
-      typeof description == 'string'
-      && description.length >= 20
+      typeof description == 'string' &&
+      description.length >= 20
     );
     this._description = description;
   }
 
   okOrError(propName, propVal, errorMessage, ok) {
-    if (ok) { return; }
+    if (ok) {
+      return;
+    }
     let className = this.constructor.name;
     throw (new Error(`
       Faulty value for ${className}.${propName}
