@@ -42,11 +42,7 @@ class WebpageHandler {
     }
 
     recipeToJson() {
-        /*
-        let jsonObj = JSON.parse(json);
-        jsonObj[recipe.name] = recipe;
-        console.log(JSON.stringify(jsonObj));
-    */
+
         console.log("working");
         return true;
     }
@@ -81,6 +77,11 @@ class WebpageHandler {
         });
         recipe.ingredients = ingredients;
         console.log(recipe);
-        this.recipeToJson();
+
+        var data = fs.readFileSync('/json/recipies.json');
+        var json = JSON.parse(data);
+        json.push(...recipe);
+        
+        fs.writeFile("/json/recipies.json", JSON.stringify(json));
     }
 }

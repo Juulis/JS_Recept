@@ -17,7 +17,6 @@ class Ingredient {
             typeof name == 'string' &&
             name.length >= 2
         );
-        console.log("setting name",name);
         this._name = name;
     }
 
