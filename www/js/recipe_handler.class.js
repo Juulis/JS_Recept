@@ -6,7 +6,7 @@ class RecipeHandler {
             $.ajax({
                 'async': false,
                 'global': false,
-                'url': '/livsmedelsdata.json',
+                'url': '/json/livsmedelsdata.json',
                 'dataType': "json",
                 'success': function (data) {
                     json = data;

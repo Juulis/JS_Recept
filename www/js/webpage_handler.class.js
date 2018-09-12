@@ -42,25 +42,30 @@ class WebpageHandler {
     }
 
     submitRecipe() {
-
+        let recipe = new Recipe();
         let ingredients = [];
-        let ingredient = {};
 
-        $('.middle Form .ingredient_group').each(function () {
-            $('Form input, Form select').each(function () {
+        console.log('after new recipe()');
+        recipe.name = $('.recipe_name').val();
+        recipe.description = $('.description').val();
+
+        $('.middle form .ingredient_group').each(function () {
+            let ingredient = new Ingredient();
+            $('.middle form input .ingredient_member').each(function () {
                 let input = $(this);
-
-                if (input.val() != "" && input.attr('name') == "ingredient") {
-                    ingredient.name = input.val();
-                } else if (input.val() != "" && input.attr('name') == "amount") {
-                    ingredient.amount = input.val();
-                } else if (input.val() != "" && input.attr('name') == "unit") {
-                    ingredient.unit = input.val();
+                if (input.val != undefined && input.val != "") {
+                    if (input.attr('name') == "ingredient") {
+                        ingredient.name = input.val();
+                    } else if (input.attr('name') == "amount") {
+                        ingredient.amount = input.val();
+                    } else if (input.attr('name') == "unit") {
+                        ingredient.unit = input.val();
+                    }
                 }
             });
             ingredients.push(ingredient);
-            console.log(ingredients);
-            
         });
+        recipe.ingredients = ingredients;
+        console.log(recipe.ingredients[0]);
     }
 }

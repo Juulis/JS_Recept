@@ -7,15 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lägg till recept</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-    <script src="/recipe_handler.class.js"></script>
-    <script src="/webpage_handler.class.js"></script>
+    <script src="/js/ingredient.class.js"></script>    
+    <script src="/js/recipe.class.js"></script>
+    <script src="/js/recipe_handler.class.js"></script>
+    <script src="/js/webpage_handler.class.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src="/main.js"></script>
-    <script src="/recepies.js"></script>
-    <link rel="stylesheet" href="/style.css">
+    <script src="/js/main.js"></script>
+    <link rel="stylesheet" href="/style/style.css">
 </head>
 
 <body>
@@ -92,9 +93,9 @@
                         </div>
 
                         <div class="half right cf">
-                            <textarea name="instruction" type="text" id="input-message" placeholder="Message"></textarea>
+                            <textarea name="instruction" type="text" id="input-message" class="description" placeholder="Message"></textarea>
                         </div>
-                        <input type="submit" value="Submit" id="input-submit">
+                        <input type="button" value="Submit" id="input-submit">
                     </form>
                 </main>
             </div>
