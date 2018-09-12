@@ -8,6 +8,7 @@
     }, {
         "item": "korv",
         "amount": "2",
+        "unit":"st"
     }],
     "description": "Blanda alla ingridientser! Bla bla bla bla"
 }, {

@@ -22,4 +22,6 @@ $(document).ready(function () {
     $('.description').val("testingtestingtestingtestingtestingtesting");
     $('.ingredient_member input').val("testing");
 
+
+
 });

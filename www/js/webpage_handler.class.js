@@ -41,6 +41,16 @@ class WebpageHandler {
         $('.ui-helper-hidden-accessible').css('display', 'none');
     }
 
+    recipeToJson() {
+        /*
+        let jsonObj = JSON.parse(json);
+        jsonObj[recipe.name] = recipe;
+        console.log(JSON.stringify(jsonObj));
+    */
+        console.log("working");
+        return true;
+    }
+
     submitRecipe() {
         let recipe = new Recipe();
         let ingredients = [];
@@ -71,13 +81,6 @@ class WebpageHandler {
         });
         recipe.ingredients = ingredients;
         console.log(recipe);
-        this.recipeToJson('/json/recepies.json', recipe);
+        this.recipeToJson();
     }
-
-    recipeToJson(json, recipe) {
-        let jsonObj = JSON.parse(json);
-        jsonObj[recipe.name] = recipe;
-        console.log(JSON.stringify(jsonObj));
-    }
-
 }

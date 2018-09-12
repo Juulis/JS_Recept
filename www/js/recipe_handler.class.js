@@ -18,8 +18,4 @@ class RecipeHandler {
         })();
         return list;
     }
-
-    createRecipeJson(recipe){
-        
-    }
 }
