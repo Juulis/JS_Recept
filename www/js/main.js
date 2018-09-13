@@ -8,20 +8,19 @@ $(document).ready(function () {
 
     $('#searchBtn').on('click', webpageHandler.search);
 
-    $('#add_recipe_field').on('click', function(){
-     webpageHandler.addRecipeField(list);
+    $('#add_recipe_field').on('click', function () {
+        webpageHandler.addRecipeField(list);
     });
 
     $('#input-submit').on('click', webpageHandler.submitRecipe);
 
     $('.ingredient').on('focus', webpageHandler.autoComplete(list));
-    
 
-    /*Testing*/
+
+    /*Testing
     $('.recipe_name').val("testing");
     $('.description').val("testingtestingtestingtestingtestingtesting");
     $('.ingredient_member input').val("testing");
-
-
+    */
 
 });

@@ -1,5 +1,5 @@
 class Ingredient {
-    
+
     get name() {
         return this._name;
     }
@@ -9,16 +9,15 @@ class Ingredient {
     get unit() {
         return this._unit;
     }
-    get id(){
+    get id() {
         return this._id;
     }
-    set id(id){
+    set id(id) {
         let recHandler = new RecipeHandler();
         let arr = recHandler.getIngridientList();
-        console.log(arr);
         this.okOrError(
             'id', id,
-            `must be any of the following ${arr}`,
+            `"ingr från lista" måste vara en produkt från livsmedelsverkets lista!`,
             typeof id == 'string' &&
             id.length >= 2 &&
             arr.includes(id)
@@ -28,7 +27,7 @@ class Ingredient {
     set name(name) {
         this.okOrError(
             'name', name,
-            'must be a string with a length >= 2',
+            'ReceptNamn måste ha mer än 2 bokstäver!',
             typeof name == 'string' &&
             name.length >= 2
         );
@@ -38,9 +37,9 @@ class Ingredient {
     set amount(amount) {
         this.okOrError(
             'amount', amount,
-            'must be a string with a length >= 2',
+            'Du måste skriva in mängd! Enbart siffror!',
             typeof amount == 'string' &&
-            amount.length >= 2
+            amount.length >= 1
         );
         this._amount = amount;
     }
@@ -49,7 +48,7 @@ class Ingredient {
         let units = ["dl", "cl", "ml", "msk", "krdm", "kg", "g", "st", "liter"];
         this.okOrError(
             'unit', unit,
-            `must be any of the following ${units}`,
+            `Något gick fel med enheterna`,
             typeof unit == 'string' &&
             unit.length >= 2 &&
             units.includes(unit)
@@ -62,10 +61,12 @@ class Ingredient {
             return;
         }
         let className = this.constructor.name;
+        alert("Kontrollera fälten! " + errorMessage);
         throw (new Error(`
       Faulty value for ${className}.${propName}
       (${typeof propVal}) ${JSON.stringify(propVal)}
       ${propName} ${errorMessage}
     `));
+
     }
 }

@@ -22,7 +22,7 @@ class Recipe {
   set categories(categories) {
     this.okOrError(
       'categories', categories,
-      'must be an array with a length >= 1',
+      'Måste finnas minst en kategori!',
       Array.isArray(categories) &&
       categories.length >= 1
     );
@@ -32,7 +32,7 @@ class Recipe {
   set tags(tags) {
     this.okOrError(
       'tags', tags,
-      'must be an array with a length >= 1',
+      'Måste finnas minst en tag!',
       Array.isArray(tags) &&
       tags.length >= 1
     );
@@ -42,7 +42,7 @@ class Recipe {
   set name(name) {
     this.okOrError(
       'name', name,
-      'must be a string with a length >= 2',
+      'Måste finnas ett namn på receptet! Minst två bokstäver!',
       typeof name == 'string' &&
       name.length >= 2
     );
@@ -62,7 +62,7 @@ class Recipe {
   set ingredients(ingredients) {
     this.okOrError(
       'ingredients', ingredients,
-      'must be an object-array with ingredients',
+      'Det måste finnas ingredienter!',
       Array.isArray(ingredients) &&
       ingredients.length >= 1
     );
@@ -72,7 +72,7 @@ class Recipe {
   set description(description) {
     this.okOrError(
       'description', description,
-      'must be a string with a length >= 2',
+      'Du måste fylla i instruktioner, minst 20 tecken!',
       typeof description == 'string' &&
       description.length >= 20
     );
@@ -84,6 +84,7 @@ class Recipe {
       return;
     }
     let className = this.constructor.name;
+    alert(errorMessage);
     throw (new Error(`
       Faulty value for ${className}.${propName}
       (${typeof propVal}) ${JSON.stringify(propVal)}
