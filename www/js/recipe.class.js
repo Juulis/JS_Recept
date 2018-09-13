@@ -12,6 +12,32 @@ class Recipe {
   get description() {
     return this._description;
   }
+  get categories() {
+    return this._categories;
+  }
+  get tags() {
+    return this._tags;
+  }
+
+  set categories(categories) {
+    this.okOrError(
+      'categories', categories,
+      'must be an array with a length >= 1',
+      Array.isArray(categories) &&
+      categories.length >= 1
+    );
+    this._categories = categories;
+  }
+
+  set tags(tags) {
+    this.okOrError(
+      'tags', tags,
+      'must be an array with a length >= 1',
+      Array.isArray(tags) &&
+      tags.length >= 1
+    );
+    this._tags = tags;
+  }
 
   set name(name) {
     this.okOrError(

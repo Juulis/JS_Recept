@@ -47,7 +47,7 @@ body {
 }
 
 .wrapper {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
 }
 
@@ -223,15 +223,14 @@ form textarea {
     height: 300px;
 }
 
-#ingriedients {
-    display: block;
-}
-
 .ingredient_member {
     display: inline;
-    width: auto;
+    width: 125px;
 }
 
+.unit, .amount{
+    width:70px;
+}
 
 .half {
     float: left;

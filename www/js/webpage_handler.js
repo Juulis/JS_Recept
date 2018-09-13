@@ -14,12 +14,12 @@ class WebpageHandler {
     }
 
     addRecipeField(list) {
-        $('.ingredient_group').last().after(`<div class="ingredient_group">
-        <input type="text" name="ingredient" class="ingredient ingredient_member"
-            placeholder="Ingredient">
-        <input type="text" name="amount" class="amount ingredient_member" placeholder="Mängd">
-        <select type="text" name="unit" class="unit ingredient_member" placeholder="Enhet">
-    </div>`);
+        $('.ingredient_group').last().after(`
+        <input type="text" name="ingredient" class="ingredient ingredient_member" placeholder="ingr från lista"/>
+        <input type="text" name="ingredient" class="ingredient_name ingredient_member" placeholder="ingr visningsnamn"/>
+        <input type="text" name="amount" class="amount ingredient_member" placeholder="Mängd"/>
+        <select type="text" name="unit" class="unit ingredient_member" placeholder="Enhet"></select>
+        `);
         this.addOptions();
         $('.ingredient').on('focus', this.autoComplete(list));
     }
@@ -48,11 +48,21 @@ class WebpageHandler {
     }
 
     submitRecipe() {
+
+        //check if all fields is filled
+        
+
+
+
+
         let recipe = new Recipe();
         let ingredients = [];
 
         recipe.name = $('.recipe_name').val();
         recipe.description = $('.description').val();
+        recipe.tags = $('.tags').val().split(',').map(item => item.trim());
+        recipe.categories = $('.categories').val().split(',').map(item => item.trim());
+
 
         $('.ingredient_group').each(function () {
             let $this = $(this);
@@ -62,12 +72,14 @@ class WebpageHandler {
                 let val = input.val();
 
                 if (val != undefined && val != "") {
-                    if (input.attr('name') == "ingredient") {
+                    if (input.attr('name') == "ingredient_name") {
                         ingredient.name = val;
+                    } else if (input.attr('name') == "ingredient") {
+                        ingredient.id = val;
                     } else if (input.attr('name') == "amount") {
                         ingredient.amount = val;
                     } else if (input.attr('name') == "unit") {
-                        ingredient.unit = val;
+                        ingredient.unit = "dl";
                     }
                 }
             });
@@ -77,11 +89,5 @@ class WebpageHandler {
         });
         recipe.ingredients = ingredients;
         console.log(recipe);
-
-        var data = fs.readFileSync('/json/recipies.json');
-        var json = JSON.parse(data);
-        json.push(...recipe);
-        
-        fs.writeFile("/json/recipies.json", JSON.stringify(json));
     }
 }

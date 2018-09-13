@@ -9,7 +9,22 @@ class Ingredient {
     get unit() {
         return this._unit;
     }
-
+    get id(){
+        return this._id;
+    }
+    set id(id){
+        let recHandler = new RecipeHandler();
+        let arr = recHandler.getIngridientList();
+        console.log(arr);
+        this.okOrError(
+            'id', id,
+            `must be any of the following ${arr}`,
+            typeof id == 'string' &&
+            id.length >= 2 &&
+            arr.includes(id)
+        );
+        this._id = id;
+    }
     set name(name) {
         this.okOrError(
             'name', name,

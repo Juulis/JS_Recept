@@ -8,8 +8,4 @@ app.use(express.static('www'));
 // Start the web server on port 3000
 app.listen(3000,() => console.log('Listening on port 3000'));
 
-const recipies = require('./www/json/recepies.json');
-let ingredients = require('./www/json/livsmedelsdata.json');
-
-
 let fs = require('fs');
