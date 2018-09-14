@@ -16,11 +16,4 @@ $(document).ready(function () {
 
     $('.ingredient').on('focus', webpageHandler.autoComplete(list));
 
-
-    /*Testing
-    $('.recipe_name').val("testing");
-    $('.description').val("testingtestingtestingtestingtestingtesting");
-    $('.ingredient_member input').val("testing");
-    */
-
 });

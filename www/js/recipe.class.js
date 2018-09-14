@@ -1,10 +1,34 @@
 class Recipe {
 
+  setNutritionValues() {
+    let recipeHandler = new RecipeHandler();
+    for (let item of this.ingredients) {
+      item.nutrition = recipeHandler.setNutrition(item.id);
+    }
+  }
+
+
   get name() {
     return this._name;
   }
+  
   get nutrition() {
-    return this._nutrition;
+    let nutritionSum = new Nutrition();
+    for (let item of this.ingredients) {
+      nutritionSum.vitaminA += item.nutrition.vitaminA;
+      nutritionSum.vitaminB6 += item.nutrition.vitaminB6;
+      nutritionSum.vitaminB12 += item.nutrition.vitaminB12;
+      nutritionSum.vitaminC += item.nutrition.vitaminC;
+      nutritionSum.vitaminD += item.nutrition.vitaminD;
+      nutritionSum.vitaminE += item.nutrition.vitaminE;
+      nutritionSum.energiKj += item.nutrition.energiKj;
+      nutritionSum.energiKcal += item.nutrition.energiKcal;
+      nutritionSum.kolhydrater += item.nutrition.kolhydrater;
+      nutritionSum.protein += item.nutrition.protein;
+      nutritionSum.fett += item.nutrition.fett;
+      nutritionSum.jarn += item.nutrition.jarn;
+    }
+    return nutritionSum;
   }
   get ingredients() {
     return this._ingredients;
@@ -52,9 +76,8 @@ class Recipe {
   set nutrition(nutrition) {
     this.okOrError(
       'nutrition', nutrition,
-      'must be an object-array with nutrition info',
-      Array.isArray(nutrition) &&
-      nutrition.length >= 1
+      'Can not set this value, it is a calculated value',
+      false
     );
     this._nutrition = nutrition;
   }

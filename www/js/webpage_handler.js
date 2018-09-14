@@ -42,7 +42,7 @@ class WebpageHandler {
     }
 
     submitRecipe() {
-
+        let recipeHandler = new RecipeHandler();
         let recipe = new Recipe();
         let ingredients = [];
 
@@ -92,7 +92,10 @@ class WebpageHandler {
 
             }
         });
+
         recipe.ingredients = ingredients;
-        console.log(recipe);
+        recipe.setNutritionValues();
+
+        recipeHandler.setRecepieJson(recipe);
     }
 }

@@ -1,0 +1,12 @@
+[{
+    "_name": "Kaffe",
+    "_description": "brygg med valfri mängd vatten",
+    "_tags": ["kaffe"],
+    "_categories": ["dryck"],
+    "_ingredients": [{
+        "_id": "Snabbkaffe pulver",
+        "_name": "kaffe",
+        "_amount": "12",
+        "_unit": "dl"
+    }]
+}]

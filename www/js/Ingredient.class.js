@@ -12,6 +12,10 @@ class Ingredient {
     get id() {
         return this._id;
     }
+    get nutrition(){
+        return this._nutrition;
+    }
+
     set id(id) {
         let recHandler = new RecipeHandler();
         let arr = recHandler.getIngridientList();
@@ -55,6 +59,15 @@ class Ingredient {
         );
         this._unit = unit;
     }
+
+    set nutrition(nutrition) {
+        this.okOrError(
+          'nutrition', nutrition,
+          'must be an object with nutrition info',
+          nutrition instanceof Nutrition
+        );
+        this._nutrition = nutrition;
+      }
 
     okOrError(propName, propVal, errorMessage, ok) {
         if (ok) {
