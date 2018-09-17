@@ -15,10 +15,13 @@ class WebpageHandler {
 
     addRecipeField(list) {
         $('.ingredient_group').last().after(`
+        <div class="ingredient_group">
         <input type="text" name="ingredient" class="ingredient ingredient_member" placeholder="ingr från lista"/>
         <input type="text" name="ingredient_name" class="ingredient_name ingredient_member" placeholder="ingr visningsnamn"/>
         <input type="text" name="amount" class="amount ingredient_member" placeholder="Mängd"/>
         <select type="text" name="unit" class="unit ingredient_member" placeholder="Enhet"></select>
+        <hr>
+        </div>
         `);
         this.addOptions();
         $('.ingredient').on('focus', this.autoComplete(list));
