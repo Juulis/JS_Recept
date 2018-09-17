@@ -19,6 +19,26 @@ class RecipeHandler {
         return list;
     }
 
+    getRecipeList() {
+        let list = [];
+        let json = (function () {
+            let json = null;
+            $.ajax({
+                'async': false,
+                'global': false,
+                'url': '/json/recepies.json',
+                'dataType': "json",
+                'success': function (data) {
+                    json = data;
+                }
+            });
+            for (let item of json) {
+                list.push(item._name);
+            }
+        })();
+        return list;
+    }
+
     getJson(jsonFile) {
         let json = (function () {
             let json = null;
@@ -45,12 +65,10 @@ class RecipeHandler {
                 'url': `/json/livsmedelsdata.json`,
                 'dataType': "json",
                 'success': function (data) {
-                    loop1:
-                    for (let item of data) {
+                    loop1: for (let item of data) {
                         if (item.Namn == ingredient) {
-                            loop2:
-                            for (let n of item.Naringsvarden.Naringsvarde) {
-                                let val = Number(n.Varde.replace(',','.'));
+                            loop2: for (let n of item.Naringsvarden.Naringsvarde) {
+                                let val = Number(n.Varde.replace(',', '.').replace(/\s+/g, ''));
                                 if (n.Namn == "Energi (kJ)") {
                                     nutrition.energiKj = val;
                                     continue loop2;
@@ -107,20 +125,5 @@ class RecipeHandler {
             });
         })();
         return nutrition;
-    }
-
-    setRecepieJson(recipe) {
-        let json = (function () {
-            $.ajax({
-                'async': false,
-                'global': false,
-                'url': '/json/recepies.json',
-                'dataType': "json",
-                'success': function (data) {
-                    data.push(recipe);
-                    //Write to file when changing this code to backend
-                }
-            });
-        })();
     }
 }

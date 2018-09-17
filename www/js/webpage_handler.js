@@ -24,7 +24,7 @@ class WebpageHandler {
         </div>
         `);
         this.addOptions();
-        $('.ingredient').on('focus', this.autoComplete(list));
+        $('.ingredient').on('focus', this.autoCompleteIngredient(list));
     }
 
     search() {
@@ -37,7 +37,15 @@ class WebpageHandler {
         console.log("searching");
     }
 
-    autoComplete(list) {
+    autoCompleteSearch(list) {
+        $('#searchfield').autocomplete({
+            source: list
+        });
+        $('.ui-helper-hidden-accessible').css('display', 'none');
+        $('.ui-autocomplete').css('max-width','250px')
+    }
+
+    autoCompleteIngredient(list) {
         $('.ingredient').autocomplete({
             source: list
         });
@@ -99,6 +107,17 @@ class WebpageHandler {
         recipe.ingredients = ingredients;
         recipe.setNutritionValues();
 
-        recipeHandler.setRecepieJson(recipe);
+        let recipeJson = JSON.stringify(recipe);
+
+
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost:3000/submit-recipe',
+            contentType: "application/json",
+            data: recipeJson,
+            success: function (response) {
+                alert('You successfully posted recipe!');
+            }
+        });
     }
 }

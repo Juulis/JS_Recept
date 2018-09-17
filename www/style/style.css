@@ -3,9 +3,9 @@ ul {
     list-style: none;
 }
 
-hr{
-    margin:0;
-    margin-top:12px; 
+hr {
+    margin: 0;
+    margin-top: 12px;
 }
 
 blockquote,
@@ -156,7 +156,7 @@ nav .dropdown-item:hover {
 /* Forms
 -------------------------------------------------------------------------------*/
 
-@import url(https: //fonts.googleapis.com/css?family=Merriweather);
+@import url(https://fonts.googleapis.com/css?family=Merriweather);
 
 *,
 *:before,
@@ -233,8 +233,8 @@ form textarea {
     width: 125px;
 }
 
-.unit, .amount{
-    width:70px;
+.unit, .amount {
+    width: 70px;
 }
 
 .half {
@@ -279,7 +279,7 @@ form textarea {
     padding: 15px;
     border-radius: 16px;
     min-width: 100px;
-    max-width:450px;
+    max-width: 450px;
     background: #f7dc85;
     font-size: 20px;
     font-family: 'Times New Roman', Times, serif;
@@ -292,8 +292,8 @@ form textarea {
 
 .ui-autocomplete li {
     padding: 10px;
-    margin:5px;
-    cursor:pointer;
+    margin: 5px;
+    cursor: pointer;
 }
 
 .ui-autocomplete li:nth-child(2n) {
@@ -317,4 +317,64 @@ form textarea {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(177, 100, 0, 0.3);
     background-color: #d8ad1f;
+}
+
+/* Food presentation */
+.image-container img {
+    display: flex;
+}
+
+.image-container img {
+    justify-content: center;
+    height: 400px;
+}
+
+main h3 {
+    text-align: center;
+    margin: 0, auto;
+}
+
+.food-container {
+    display: flex;
+    white-space: pre;
+    font-family: monospace;
+}
+
+.ingredients-container ol {
+    list-style: disc;
+}
+
+.ingredients-container {
+    float: left;
+    font-size: 20px;
+}
+
+.instructions-container {
+    float: right;
+    overflow-wrap:normal;
+    overflow-x:scroll;
+}
+
+@media only screen and (max-width: 1300px) {
+    .wrapper{
+        width:100%;
+    }
+    body{
+        margin:5px;
+    }
+    .food-container{
+        display:inline-flex;
+    }
+    .instructions-container{
+        text-align: left;
+        padding:0;
+        margin:0;
+        float:none;
+    }
+    .ingredients-container{
+        margin:0;
+        padding:0;
+        float:none;
+        width:100px;
+    }
 }
