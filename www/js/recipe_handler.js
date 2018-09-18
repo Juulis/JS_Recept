@@ -1,25 +1,25 @@
 class RecipeHandler {
     getIngridientList() {
+
         let list = [];
-        let json = (function () {
-            let json = null;
+        let getlist = (function () {
+            let getlist = null;
             $.ajax({
-                'async': false,
-                'global': false,
-                'url': '/json/livsmedelsdata.json',
-                'dataType': "json",
-                'success': function (data) {
-                    json = data;
+                type: "GET",
+                async: false,
+                url: 'http://localhost:3000/json/livsmlist',
+                success: function (response) {
+                    list = response;
                 }
             });
-            for (let item of json) {
-                list.push(item.Namn);
-            }
         })();
+
         return list;
+
     }
 
     getRecipeList() {
+
         let list = [];
         let json = (function () {
             let json = null;
@@ -55,75 +55,21 @@ class RecipeHandler {
         return json;
     }
 
-    setNutrition(ingredient) {
-        let nutrition = new Nutrition();
-        let json = (function () {
-            let json = null;
-            $.ajax({
-                'async': false,
-                'global': false,
-                'url': `/json/livsmedelsdata.json`,
-                'dataType': "json",
-                'success': function (data) {
-                    loop1: for (let item of data) {
-                        if (item.Namn == ingredient) {
-                            loop2: for (let n of item.Naringsvarden.Naringsvarde) {
-                                let val = Number(n.Varde.replace(',', '.').replace(/\s+/g, ''));
-                                if (n.Namn == "Energi (kJ)") {
-                                    nutrition.energiKj = val;
-                                    continue loop2;
-                                }
-                                if (n.Namn == "Energi (kcal)") {
-                                    nutrition.energiKcal = val;
-                                    continue loop2;
-                                }
-                                if (n.Namn == "Kolhydrater") {
-                                    nutrition.kolhydrater = val;
-                                    continue loop2;
-                                }
-                                if (n.Namn == "Protein") {
-                                    nutrition.protein = val;
-                                    continue loop2;
-                                }
-                                if (n.Namn == "Fett") {
-                                    nutrition.fett = val;
-                                    continue loop2;
-                                }
-                                if (n.Namn == "Järn") {
-                                    nutrition.jarn = val;
-                                    continue loop2;
-                                }
-                                if (n.Namn == "Vitamin A") {
-                                    nutrition.vitaminA = val;
-                                    continue loop2;
-                                }
-                                if (n.Namn == "Vitamin B6") {
-                                    nutrition.vitaminB6 = val;
-                                    continue loop2;
-                                }
-                                if (n.Namn == "Vitamin B12") {
-                                    nutrition.vitaminB12 = val;
-                                    continue loop2;
-                                }
-                                if (n.Namn == "Vitamin C") {
-                                    nutrition.vitaminC = val;
-                                    continue loop2;
-                                }
-                                if (n.Namn == "Vitamin D") {
-                                    nutrition.vitaminD = val;
-                                    continue loop2;
-                                }
-                                if (n.Namn == "Vitamin E") {
-                                    nutrition.vitaminE = val;
-                                    continue loop2;
-                                }
-                            }
-                            break loop1;
-                        }
-                    }
-                }
-            });
-        })();
-        return nutrition;
+    setNutritionValues(ingrList) {
+        //TODO get back a new list with nutritions set.
+        let updIngrList = null;
+        let ingrListJson = JSON.stringify(ingrList);
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: 'http://localhost:3000/setnutritions',
+            contentType: "application/json",
+            data: ingrListJson,
+            success: function (response) {
+                updIngrList = response;
+            }
+        });
+        
+        return updIngrList;    
     }
 }

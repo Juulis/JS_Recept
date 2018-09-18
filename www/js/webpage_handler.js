@@ -42,7 +42,7 @@ class WebpageHandler {
             source: list
         });
         $('.ui-helper-hidden-accessible').css('display', 'none');
-        $('.ui-autocomplete').css('max-width','250px')
+        $('.ui-autocomplete').css('max-width', '250px')
     }
 
     autoCompleteIngredient(list) {
@@ -104,19 +104,19 @@ class WebpageHandler {
             }
         });
 
-        recipe.ingredients = ingredients;
-        recipe.setNutritionValues();
+        let ingrWithNutrition = recipeHandler.setNutritionValues(ingredients);
+        recipe.ingredients = ingrWithNutrition;
 
         let recipeJson = JSON.stringify(recipe);
-
-
         $.ajax({
             type: "POST",
             url: 'http://localhost:3000/submit-recipe',
             contentType: "application/json",
             data: recipeJson,
             success: function (response) {
-                alert('You successfully posted recipe!');
+                if (response == 'done') {
+                    alert('Ditt recept är tillagt!');
+                }
             }
         });
     }

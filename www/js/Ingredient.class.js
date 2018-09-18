@@ -54,7 +54,6 @@ class Ingredient {
             'unit', unit,
             `Något gick fel med enheterna`,
             typeof unit == 'string' &&
-            unit.length >= 2 &&
             units.includes(unit)
         );
         this._unit = unit;

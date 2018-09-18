@@ -1,13 +1,5 @@
 class Recipe {
 
-  setNutritionValues() {
-    let recipeHandler = new RecipeHandler();
-    for (let item of this.ingredients) {
-      item.nutrition = recipeHandler.setNutrition(item.id);
-    }
-  }
-
-
   get name() {
     return this._name;
   }

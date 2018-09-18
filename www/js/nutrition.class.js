@@ -1,4 +1,4 @@
-class Nutrition {
+module.exports = class Nutrition {
     constructor(){
         this.vitaminA = 0;
         this.vitaminB6 = 0;
