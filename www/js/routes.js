@@ -112,5 +112,23 @@ module.exports = class Routes {
         }
         res.send(ingredientList);
       });
+
+
+    this.app.get(
+      '/getrecipe/:recipeid', (req, res) => {
+        let recipe = {};
+        let data = fs.readFileSync('./www/json/recepies.json');
+        data = JSON.parse(data);
+        let found = false;
+        for (let item of data) {
+          if (item._name == req.params.recipeid){
+            found = true;
+            res.send(item);
+          }
+        }
+        if(found==false){
+          res.send(false);
+        }
+      });
   }
 }

@@ -15,5 +15,4 @@ $(document).ready(function () {
     $('#input-submit').on('click', webpageHandler.submitRecipe);
 
     $('.ingredient').on('focus', webpageHandler.autoCompleteIngredient(ingrList));
-
 });

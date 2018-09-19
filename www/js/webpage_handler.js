@@ -30,11 +30,7 @@ class WebpageHandler {
     search() {
         let field = $("#searchfield");
         let input = field.val();
-        let p = $('<p></p>');
-        p.append(`Searching for ${input}`);
-        $('.middle').append(p);
-        $('#searchfield').val("");
-        console.log("searching");
+        this.showRecipe(input);
     }
 
     autoCompleteSearch(list) {
@@ -120,4 +116,40 @@ class WebpageHandler {
             }
         });
     }
+
+    showRecipe(recipeName) {
+        let recipe = new Recipe();
+        //testing
+        recipeName = 'Pannkakor'
+        //get recipe object
+        let getrecipe = (function () {
+            let getrecipe = null;
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: `http://localhost:3000/getrecipe/${recipeName}`,
+                success: function (response) {
+                    if (response != false) {
+                        recipe = response;
+                    } else {
+                        return null;
+                    }
+                }
+            });
+        })();
+        
+        Object.setPrototypeOf(recipe, Recipe.prototype)
+        let ol = $('<ol></ol>');
+        let ingredients = recipe.ingredients;
+        for (const ingredient of ingredients) {
+            let li = $(`<li>${ingredient._amount} ${ingredient._unit} ${ingredient._name}</li>`)
+            ol.append(li);
+        }
+        $('.ingredients-container').append(ol);
+
+        console.log(recipe);
+        let instructions = $(`<p>${recipe._description}</p>`);
+        $('.instructions-container').append(instructions);
+    }
+
 }
