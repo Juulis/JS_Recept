@@ -34,6 +34,9 @@ class Recipe {
   get tags() {
     return this._tags;
   }
+  get img(){
+    return this._img;
+  }
 
   set categories(categories) {
     this.okOrError(
@@ -92,6 +95,16 @@ class Recipe {
       description.length >= 20
     );
     this._description = description;
+  }
+
+  set img(img) {
+    this.okOrError(
+      'img', img,
+      'Måste finnas ett namn på receptet! Minst två bokstäver!',
+      typeof img == 'string' &&
+      img.length >= 1
+    );
+    this._img = img;
   }
 
   okOrError(propName, propVal, errorMessage, ok) {

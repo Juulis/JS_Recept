@@ -121,14 +121,26 @@ module.exports = class Routes {
         data = JSON.parse(data);
         let found = false;
         for (let item of data) {
-          if (item._name == req.params.recipeid){
+          if (item._name == req.params.recipeid) {
             found = true;
             res.send(item);
           }
         }
-        if(found==false){
+        if (found == false) {
           res.send(false);
         }
       });
+
+    this.app.get(
+      '/getcategories', (req, res) => {
+        let categories = [{}];
+        let data = fs.readFileSync('./www/json/recepies.json');
+        data = JSON.parse(data);
+        for (let item of data) {
+          //TODO 
+        }
+            res.send(categories);
+      });
+
   }
 }

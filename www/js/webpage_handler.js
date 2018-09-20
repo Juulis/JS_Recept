@@ -28,9 +28,10 @@ class WebpageHandler {
     }
 
     search() {
+        let webphandler = new WebpageHandler();
         let field = $("#searchfield");
         let input = field.val();
-        this.showRecipe(input);
+        webphandler.showRecipe(input);
     }
 
     autoCompleteSearch(list) {
@@ -69,6 +70,7 @@ class WebpageHandler {
         recipe.description = $('.description').val();
         recipe.tags = $('.tags').val().split(',').map(item => item.trim());
         recipe.categories = $('.categories').val().split(',').map(item => item.trim());
+        recipe.img = $('.imgsrc').val();
 
         $('.ingredient_group').each(function () {
             let $this = $(this);
@@ -119,9 +121,8 @@ class WebpageHandler {
 
     showRecipe(recipeName) {
         let recipe = new Recipe();
-        //testing
-        recipeName = 'Pannkakor'
         //get recipe object
+        let foundRecipe = false;
         let getrecipe = (function () {
             let getrecipe = null;
             $.ajax({
@@ -131,25 +132,96 @@ class WebpageHandler {
                 success: function (response) {
                     if (response != false) {
                         recipe = response;
+                        foundRecipe = true;
+                    }
+                }
+            });
+        })();
+
+        let ingrContainer = $('.ingredients-container');
+        let instrContainer = $('.instructions-container');
+        let imgContainer = $('.image-container');
+        let headerContainer = $('#header');
+
+        ingrContainer.text('');
+        instrContainer.text('');
+        imgContainer.text('');
+        headerContainer.text('');
+
+        if (foundRecipe == true) {
+            Object.setPrototypeOf(recipe, Recipe.prototype)
+            let ol = $('<ol></ol>');
+            let ingredients = recipe.ingredients;
+            for (const ingredient of ingredients) {
+                let li = $(`<li>${ingredient._amount} ${ingredient._unit} ${ingredient._name}</li>`)
+                ol.append(li);
+            }
+
+            let img = $(`<img src="${recipe.img}">`);
+
+            ingrContainer.append(ol);
+            instrContainer.append(recipe.description);
+            headerContainer.append(recipe.name);
+            if (recipe.img != undefined) {
+                imgContainer.append(img);
+            }
+        } else {
+            ingrContainer.text('');
+            instrContainer.text('');
+            instrContainer.append('Hittade inget recept med det namnet.')
+        }
+    }
+
+    showCategories() {
+        let catList = [];
+        let getCategories = (function () {
+            let getCategories = null;
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: `http://localhost:3000/getcategories`,
+                success: function (response) {
+                    if (response != undefined) {
+                        catList = response;
                     } else {
                         return null;
                     }
                 }
             });
         })();
-        
-        Object.setPrototypeOf(recipe, Recipe.prototype)
-        let ol = $('<ol></ol>');
-        let ingredients = recipe.ingredients;
-        for (const ingredient of ingredients) {
-            let li = $(`<li>${ingredient._amount} ${ingredient._unit} ${ingredient._name}</li>`)
-            ol.append(li);
-        }
-        $('.ingredients-container').append(ol);
 
-        console.log(recipe);
-        let instructions = $(`<p>${recipe._description}</p>`);
-        $('.instructions-container').append(instructions);
+        let div = $('.panel-group');
+
+        /* catList = [{name:'cat1',recepies:['rec1','rec2','rec3']},{name:'cat2',recepies:['rec1','rec2']}] */
+
+        for (cat in catList) {
+            let ul = $('<ul class="list-group"><ul/>');
+            for (rec of catList.recepies) {
+                let li = $(`<li class="list-group-item">${rec}</li>`);
+                ul.append(li);
+            }
+            let catHeadDiv = $(`
+            <div class="panel-heading" role="tab" id="collapseListGroupHeading${cat}">
+              <h6 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" href="#collapseListGroup${cat}" aria-expanded="false" aria-controls="collapseListGroup1">
+                  ${catList[cat].name}
+                </a>
+              </h6>
+            </div>`
+            );
+            let recListDiv = $(`
+            <div id="collapseListGroup${cat}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading${cat}">
+              <ul class="list-group">
+                <li class="list-group-item">Kladdkaka</li>
+                <li class="list-group-item">Sockerkaka</li>
+              </ul>
+            </div>
+            `);
+            let categoryDiv = $(`<div class="panel panel-default"></div>`)
+        }
+        categoryDiv.append(catHeadDiv);
+        categoryDiv.append(recListDiv);
+        div.append(categoryDiv);
     }
 
 }

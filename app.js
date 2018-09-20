@@ -20,4 +20,3 @@ let Nutrition = require('./www/js/nutrition.class');
 let nutrition = new Nutrition();
 let Routes = require('./www/js/routes');
 new Routes(app,nutrition);
-

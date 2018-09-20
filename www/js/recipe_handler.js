@@ -69,7 +69,6 @@ class RecipeHandler {
                 updIngrList = response;
             }
         });
-        
         return updIngrList;    
     }
 }

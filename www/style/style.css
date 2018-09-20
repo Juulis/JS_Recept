@@ -45,6 +45,7 @@ body {
     font: 12px/18px Arial, sans-serif;
     width: 100%;
     background-color: burlywood;
+    min-width: 600px;
 }
 
 .middle {
@@ -320,13 +321,15 @@ form textarea {
 }
 
 /* Food presentation */
-.image-container img {
-    display: flex;
+.image-container {
+    min-height: 200px;
+    margin-bottom: 50px;
 }
 
 .image-container img {
-    justify-content: center;
-    height: 400px;
+    display: flex;
+    height: 300px;
+    margin: auto;
 }
 
 main h3 {
@@ -347,12 +350,34 @@ main h3 {
 .ingredients-container {
     float: left;
     font-size: 20px;
+    margin:50px;
+    padding:10px;
 }
 
 .instructions-container {
     float: right;
     overflow-wrap:normal;
-    overflow-x:scroll;
+    margin:50px;
+    padding:10ox;
+}
+
+
+/* Scroll style */
+.instructions-container::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+}
+
+.instructions-container::-webkit-scrollbar {
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+.instructions-container::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(177, 100, 0, 0.3);
+    background-color: #d8ad1f;
 }
 
 @media only screen and (max-width: 1300px) {
@@ -362,6 +387,7 @@ main h3 {
     body{
         margin:5px;
     }
+
     .food-container{
         display:inline-flex;
     }
@@ -370,11 +396,13 @@ main h3 {
         padding:0;
         margin:0;
         float:none;
+        margin-left:100px;
     }
     .ingredients-container{
         margin:0;
         padding:0;
         float:none;
         width:100px;
+        margin-right: 50px;
     }
 }
