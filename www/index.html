@@ -19,29 +19,46 @@
     </header>
 
     <nav class="navbar navbar-expand-lg navbar-light">
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-        aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/index.html">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/">Hem<span class="sr-only">(current)</span></a>
           </li>
 
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-              aria-expanded="false">
-              Alternativ kost
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="#">Standard</a>
-              <a class="dropdown-item" href="#">Mjölkfritt</a>
-              <a class="dropdown-item" href="#">Glutenfritt</a>
-              <a class="dropdown-item" href="#">Vegetariskt</a>
+          <!-- Login popup -->
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+
+                <div class="modal-header">
+                  <h3 class="modal-title" id="exampleModalLongTitle">Logga in</h3>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+
+                <form class="login" method="post" action="/authenticate">
+                  <div class="modal-body">
+                    <input type="username" name="user" placeholder="Användare" />
+                    <input type="password" name="password" placeholder="Lösenord" />
+                  </div>
+
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Logga in</button>
+                  </div>
+                </form>
+
+              </div>
             </div>
-          </li>
+          </div>
+
           <li class="nav-item">
             <a class="nav-link" href="/about_us.html">Om oss</a>
           </li>
@@ -77,10 +94,17 @@
     </div>
 
     <footer class="footer">
-      <p>&copy;Juulis</p>
-      <img src="/src/facebook.png">
-      <img src="/src/instagram.png">
-      <img src="/src/twitter.png">
+      <div class="addrecipediv">
+        <p class="new-recipe" data-toggle="modal" data-target="#exampleModalCenter">
+          Nytt Recept
+        </p>
+      </div>
+      <div class="contactdiv">
+        <p class="signature">&copy;Juulis</p>
+        <img src="/src/facebook.png">
+        <img src="/src/instagram.png">
+        <img src="/src/twitter.png">
+      </div>
     </footer>
 
   </div>

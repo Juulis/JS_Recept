@@ -41,6 +41,11 @@ summary {
     display: block;
 }
 
+a:hover{
+    color:currentColor;
+    text-decoration: none;
+}
+
 body {
     font: 12px/18px Arial, sans-serif;
     width: 100%;
@@ -48,15 +53,10 @@ body {
     min-width: 600px;
 }
 
-.middle {
-    background-color: beige;
-}
-
 .wrapper {
     width: 90%;
     margin: 0 auto;
 }
-
 
 /* Header
 -----------------------------------------------------------------------------*/
@@ -95,10 +95,10 @@ nav .dropdown-item:hover {
 
 /* Middle
 -----------------------------------------------------------------------------*/
-
 .middle {
     border-left: 250px solid #B5E3FF;
     position: relative;
+    background-color: beige;
 }
 
 .middle:after {
@@ -121,6 +121,10 @@ nav .dropdown-item:hover {
 
 /* Left Sidebar
 -----------------------------------------------------------------------------*/
+.left-sidebar h6 {
+    padding: 10px;
+    margin: 0;
+}
 
 .left-sidebar {
     padding: 20px;
@@ -132,24 +136,58 @@ nav .dropdown-item:hover {
     min-height: 700px;
 }
 
+.panel-heading {
+    border: 1px solid burlywood;
+    background: #faca48;
+}
+
+aside a {
+    font-weight: bold;
+    text-decoration: none;
+    color: rgb(99, 78, 39);
+}
+
+aside .panel-heading:hover, .list-group-item:hover {
+    cursor: pointer;
+    background: burlywood;
+}
+
+.list-group-item {
+    background: beige;
+}
+
 
 /* Footer
 -----------------------------------------------------------------------------*/
 
-.footer {
+.footer div{
     height: 60px;
     background: #BFF08E;
     display: flex;
     justify-content: flex-end;
 }
 
-.footer img {
+.footer div img {
     height: 60px;
 }
 
-.footer p {
+.signature {
     font-family: fantasy;
     font-size: 25px;
+    position: relative;
+    top: 20px;
+}
+
+.footer .addrecipediv{
+ float:left;   
+ padding-left: 30%;
+}
+
+.new-recipe{
+    color:grey;
+    cursor: pointer;
+    font-family: fantasy;
+    font-size: 15px;
     position: relative;
     top: 20px;
 }
@@ -157,7 +195,7 @@ nav .dropdown-item:hover {
 /* Forms
 -------------------------------------------------------------------------------*/
 
-@import url(https://fonts.googleapis.com/css?family=Merriweather);
+@import url(https: //fonts.googleapis.com/css?family=Merriweather);
 
 *,
 *:before,
@@ -182,7 +220,8 @@ main form {
 }
 
 main form input,
-form div textarea, form div button, .ingredient_member {
+.login input,
+form div textarea, form div button, .unit {
     border: 0;
     outline: 0;
     padding: 1em;
@@ -250,6 +289,15 @@ form textarea {
 
 .left {
     margin-right: 2%;
+}
+.login input{
+    font-size:16px;
+}
+
+.modal-title{
+    margin: auto;
+    justify-content: center;
+    text-align: center;
 }
 
 @media (max-width: 480px) {
@@ -350,15 +398,15 @@ main h3 {
 .ingredients-container {
     float: left;
     font-size: 20px;
-    margin:50px;
-    padding:10px;
+    margin: 50px;
+    padding: 10px;
 }
 
 .instructions-container {
     float: right;
-    overflow-wrap:normal;
-    margin:50px;
-    padding:10ox;
+    overflow-wrap: normal;
+    margin: 50px;
+    padding: 10ox;
 }
 
 
@@ -381,28 +429,31 @@ main h3 {
 }
 
 @media only screen and (max-width: 1300px) {
-    .wrapper{
-        width:100%;
-    }
-    body{
-        margin:5px;
+    .wrapper {
+        width: 100%;
     }
 
-    .food-container{
-        display:inline-flex;
+    body {
+        margin: 5px;
     }
-    .instructions-container{
+
+    .food-container {
+        display: inline-flex;
+    }
+
+    .instructions-container {
         text-align: left;
-        padding:0;
-        margin:0;
-        float:none;
-        margin-left:100px;
+        padding: 0;
+        margin: 0;
+        float: none;
+        margin-left: 100px;
     }
-    .ingredients-container{
-        margin:0;
-        padding:0;
-        float:none;
-        width:100px;
+
+    .ingredients-container {
+        margin: 0;
+        padding: 0;
+        float: none;
+        width: 100px;
         margin-right: 50px;
     }
 }

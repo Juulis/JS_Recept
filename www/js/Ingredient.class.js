@@ -17,8 +17,7 @@ class Ingredient {
     }
 
     set id(id) {
-        let recHandler = new RecipeHandler();
-        let arr = recHandler.getIngridientList();
+        let arr = RecipeHandler.getIngridientList();
         this.okOrError(
             'id', id,
             `"ingr från lista" måste vara en produkt från livsmedelsverkets lista!`,

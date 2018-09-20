@@ -7,7 +7,29 @@ module.exports = class Routes {
   }
 
   setRoutes() {
+
+    const path = require('path');
     const fs = require('fs');
+
+    this.app.get(
+      '/', (req, res) => {
+        res.send('index');
+      });
+
+    this.app.get(
+      '/add_recipe', (req, res) => {
+        res.render('add_recipe.html');
+      });
+
+    this.app.post(
+      '/authenticate', (req, res) => {
+        const postBody = req.body;
+        if (postBody.user == "Juulis" && postBody.password == "dannyking") {
+          return res.sendFile(path.join(__dirname + '/www/add_recipe.html'));
+          
+        }
+        res.render('<p>FEL LÖSEN, ÄR DU HACKARE ELLER!?</p>');
+      });
 
     this.app.get(
       '/json/searchlist', (req, res) => {
@@ -42,7 +64,7 @@ module.exports = class Routes {
 
     this.app.post(
       '/setnutritions', (req, res) => {
-        let nutrition = this.nutrition;
+        let nutrition = app.nutrition;
         let ingredientList = req.body;
         for (let ingredient of ingredientList) {
           ingredient.nutrition = setNutrition(ingredient._id);
@@ -133,13 +155,28 @@ module.exports = class Routes {
 
     this.app.get(
       '/getcategories', (req, res) => {
-        let categories = [{}];
+        let categories = {};
+        /* catList = [{name:'cat1',recepies:['rec1','rec2','rec3']},{name:'cat2',recepies:['rec1','rec2']}] */
+
         let data = fs.readFileSync('./www/json/recepies.json');
         data = JSON.parse(data);
-        for (let item of data) {
-          //TODO 
+        for (let recepe of data) {
+          for (let category of recepe._categories) {
+            //if category not exists, create it
+            if (categories[category] == undefined) {
+              let key = category,
+                obj = {
+                  [key]: [recepe._name]
+                };
+              categories[category] = obj[category]
+            }
+            //if category already exists, add recepe
+            else {
+              categories[category].push(recepe._name);
+            }
+          }
         }
-            res.send(categories);
+        res.send(categories);
       });
 
   }

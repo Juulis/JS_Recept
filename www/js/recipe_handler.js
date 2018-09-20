@@ -1,5 +1,5 @@
 class RecipeHandler {
-    getIngridientList() {
+   static getIngridientList() {
 
         let list = [];
         let getlist = (function () {
@@ -7,7 +7,7 @@ class RecipeHandler {
             $.ajax({
                 type: "GET",
                 async: false,
-                url: 'http://localhost:3000/json/livsmlist',
+                url: '/json/livsmlist',
                 success: function (response) {
                     list = response;
                 }
@@ -18,8 +18,8 @@ class RecipeHandler {
 
     }
 
-    getRecipeList() {
-
+   static getRecipeList() {
+        //TODO move this to BackEnd and return a list of names to FE
         let list = [];
         let json = (function () {
             let json = null;
@@ -39,7 +39,7 @@ class RecipeHandler {
         return list;
     }
 
-    getJson(jsonFile) {
+   static getJson(jsonFile) {
         let json = (function () {
             let json = null;
             $.ajax({
@@ -55,20 +55,20 @@ class RecipeHandler {
         return json;
     }
 
-    setNutritionValues(ingrList) {
+   static setNutritionValues(ingrList) {
         //TODO get back a new list with nutritions set.
         let updIngrList = null;
         let ingrListJson = JSON.stringify(ingrList);
         $.ajax({
             async: false,
             type: "POST",
-            url: 'http://localhost:3000/setnutritions',
+            url: '/setnutritions',
             contentType: "application/json",
             data: ingrListJson,
             success: function (response) {
                 updIngrList = response;
             }
         });
-        return updIngrList;    
+        return updIngrList;
     }
 }

@@ -2,6 +2,9 @@
 const express = require('express');
 // Create a new web server
 const app = express();
+
+const bodyParser = require('body-parser');
+
 // Tell the web server to serve files
 // from the www folder
 app.use(express.static('www'));
@@ -10,13 +13,18 @@ app.use(express.static('www'));
 app.use(express.json({
     extended: false
 }));
-// Start the web server on port 3000
-app.listen(3000, () => console.log('Listening on port 3000'));
 
-// Require the Routes class - that sets all 
-// REST-like routes
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 let Nutrition = require('./www/js/nutrition.class');
 let nutrition = new Nutrition();
-let Routes = require('./www/js/routes');
-new Routes(app,nutrition);
+let Routes = require('./routes');
+// Require the Routes class - that sets all 
+// REST-like routes
+new Routes(app);
+
+
+// Start the web server on port 3000
+app.listen(3000, () => console.log('Listening on port 3000'));

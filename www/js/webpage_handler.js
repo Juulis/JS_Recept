@@ -27,16 +27,17 @@ class WebpageHandler {
         $('.ingredient').on('focus', this.autoCompleteIngredient(list));
     }
 
-    search() {
-        let webphandler = new WebpageHandler();
+    static search() {
+        //TODO wtf is wrong with this method? Can't call a sibling method with 'this'...
         let field = $("#searchfield");
         let input = field.val();
-        webphandler.showRecipe(input);
+        field.val('');
+        WebpageHandler.showRecipe(input);
     }
 
-    autoCompleteSearch(list) {
+    static autoCompleteSearch() {
         $('#searchfield').autocomplete({
-            source: list
+            source: RecipeHandler.getRecipeList()
         });
         $('.ui-helper-hidden-accessible').css('display', 'none');
         $('.ui-autocomplete').css('max-width', '250px')
@@ -49,8 +50,13 @@ class WebpageHandler {
         $('.ui-helper-hidden-accessible').css('display', 'none');
     }
 
+    static capFirstLetter(string) {
+        let formatedString = string.trim();
+        formatedString = formatedString.charAt(0).toUpperCase() + formatedString.toLowerCase().substr(1);
+        return formatedString;
+    }
+
     submitRecipe() {
-        let recipeHandler = new RecipeHandler();
         let recipe = new Recipe();
         let ingredients = [];
 
@@ -65,12 +71,14 @@ class WebpageHandler {
             recipe.categories = undefined;
         }
 
-
-        recipe.name = $('.recipe_name').val();
+        //Format and set recipe from inputs
+        recipe.name = WebpageHandler.capFirstLetter($('.recipe_name').val());
         recipe.description = $('.description').val();
-        recipe.tags = $('.tags').val().split(',').map(item => item.trim());
-        recipe.categories = $('.categories').val().split(',').map(item => item.trim());
-        recipe.img = $('.imgsrc').val();
+        recipe.tags = $('.tags').val().split(',').map(string => WebpageHandler.capFirstLetter(string));
+        recipe.categories = $('.categories').val().split(',').map(string => WebpageHandler.capFirstLetter(string));
+        if ($('.imgsrc').val() != '') {
+            recipe.img = $('.imgsrc').val();
+        }
 
         $('.ingredient_group').each(function () {
             let $this = $(this);
@@ -102,13 +110,13 @@ class WebpageHandler {
             }
         });
 
-        let ingrWithNutrition = recipeHandler.setNutritionValues(ingredients);
+        let ingrWithNutrition = RecipeHandler.setNutritionValues(ingredients);
         recipe.ingredients = ingrWithNutrition;
 
         let recipeJson = JSON.stringify(recipe);
         $.ajax({
             type: "POST",
-            url: 'http://localhost:3000/submit-recipe',
+            url: '/submit-recipe',
             contentType: "application/json",
             data: recipeJson,
             success: function (response) {
@@ -119,16 +127,17 @@ class WebpageHandler {
         });
     }
 
-    showRecipe(recipeName) {
-        let recipe = new Recipe();
+    static showRecipe(recipeName) {
+
         //get recipe object
+        let recipe = new Recipe();
         let foundRecipe = false;
         let getrecipe = (function () {
             let getrecipe = null;
             $.ajax({
                 type: "GET",
                 async: false,
-                url: `http://localhost:3000/getrecipe/${recipeName}`,
+                url: `/getrecipe/${recipeName}`,
                 success: function (response) {
                     if (response != false) {
                         recipe = response;
@@ -138,6 +147,7 @@ class WebpageHandler {
             });
         })();
 
+        //Build HTML
         let ingrContainer = $('.ingredients-container');
         let instrContainer = $('.instructions-container');
         let imgContainer = $('.image-container');
@@ -157,12 +167,12 @@ class WebpageHandler {
                 ol.append(li);
             }
 
-            let img = $(`<img src="${recipe.img}">`);
 
             ingrContainer.append(ol);
             instrContainer.append(recipe.description);
             headerContainer.append(recipe.name);
             if (recipe.img != undefined) {
+                let img = $(`<img src="${recipe.img}">`);
                 imgContainer.append(img);
             }
         } else {
@@ -172,17 +182,17 @@ class WebpageHandler {
         }
     }
 
-    showCategories() {
-        let catList = [];
+    static showCategories() {
+        let catObj = {};
         let getCategories = (function () {
             let getCategories = null;
             $.ajax({
                 type: "GET",
                 async: false,
-                url: `http://localhost:3000/getcategories`,
+                url: `/getcategories`,
                 success: function (response) {
                     if (response != undefined) {
-                        catList = response;
+                        catObj = response;
                     } else {
                         return null;
                     }
@@ -193,35 +203,33 @@ class WebpageHandler {
         let div = $('.panel-group');
 
         /* catList = [{name:'cat1',recepies:['rec1','rec2','rec3']},{name:'cat2',recepies:['rec1','rec2']}] */
+        let catHeadDiv;
+        let recListDiv;
+        let categoryDiv;
 
-        for (cat in catList) {
-            let ul = $('<ul class="list-group"><ul/>');
-            for (rec of catList.recepies) {
+        //For each category
+        for (let cat in catObj) {
+            let ul = $('<ul class="list-group"></ul>');
+            for (let rec of catObj[cat]) {
                 let li = $(`<li class="list-group-item">${rec}</li>`);
                 ul.append(li);
             }
-            let catHeadDiv = $(`
+            catHeadDiv = $(`
             <div class="panel-heading" role="tab" id="collapseListGroupHeading${cat}">
-              <h6 class="panel-title">
-                <a class="collapsed" data-toggle="collapse" href="#collapseListGroup${cat}" aria-expanded="false" aria-controls="collapseListGroup1">
-                  ${catList[cat].name}
+            <a class="collapsed" data-toggle="collapse" href="#collapseListGroup${cat}" aria-expanded="false" aria-controls="collapseListGroup1">
+            <h6 class="panel-title">
+                  ${cat}
+                  </h6>
                 </a>
-              </h6>
-            </div>`
-            );
-            let recListDiv = $(`
-            <div id="collapseListGroup${cat}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading${cat}">
-              <ul class="list-group">
-                <li class="list-group-item">Kladdkaka</li>
-                <li class="list-group-item">Sockerkaka</li>
-              </ul>
-            </div>
-            `);
-            let categoryDiv = $(`<div class="panel panel-default"></div>`)
+            </div>`);
+
+            recListDiv = $(`<div id="collapseListGroup${cat}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="collapseListGroupHeading${cat}"></div>`);
+            recListDiv.append(ul);
+            categoryDiv = $(`<div class="panel panel-default"></div>`)
+            categoryDiv.append(catHeadDiv);
+            categoryDiv.append(recListDiv);
+            div.append(categoryDiv);
         }
-        categoryDiv.append(catHeadDiv);
-        categoryDiv.append(recListDiv);
-        div.append(categoryDiv);
     }
 
 }
