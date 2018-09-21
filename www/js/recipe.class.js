@@ -31,9 +31,6 @@ class Recipe {
   get categories() {
     return this._categories;
   }
-  get tags() {
-    return this._tags;
-  }
   get img(){
     return this._img;
   }
@@ -46,16 +43,6 @@ class Recipe {
       categories.length >= 1
     );
     this._categories = categories;
-  }
-
-  set tags(tags) {
-    this.okOrError(
-      'tags', tags,
-      'Måste finnas minst en tag!',
-      Array.isArray(tags) &&
-      tags.length >= 1
-    );
-    this._tags = tags;
   }
 
   set name(name) {

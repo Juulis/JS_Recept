@@ -16,10 +16,27 @@ module.exports = class Routes {
         res.send('index');
       });
 
-    this.app.get(
-      '/add_recipe', (req, res) => {
-        res.render('add_recipe.html');
-      });
+      this.app.get(
+        '/getcategorylist', (req, res) => {
+          let catlist = [];
+          let categories = {};
+          let data = fs.readFileSync('./www/json/recepies.json');
+          data = JSON.parse(data);
+          for (let recepe of data) {
+            for (let category of recepe._categories) {
+              //if category not exists in obj, create cat as prop in categories obj and add it to catlist
+              if (categories[category] == undefined) {
+                catlist.push(category);
+                let key = category,
+                  obj = {
+                    [key]: ['']
+                  };
+                categories[category] = obj[category]
+              }
+            }
+          }
+          res.send(catlist);
+        });
 
     this.app.post(
       '/authenticate', (req, res) => {
@@ -28,7 +45,7 @@ module.exports = class Routes {
           return res.sendFile(path.join(__dirname + '/www/add_recipe.html'));
           
         }
-        res.render('<p>FEL LÖSEN, ÄR DU HACKARE ELLER!?</p>');
+        res.send('<p>FEL LÖSEN, ÄR DU HACKARE ELLER!?</p>');
       });
 
     this.app.get(

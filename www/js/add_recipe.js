@@ -1,11 +1,9 @@
-let webpageHandler = new WebpageHandler();
+WebpageHandler.addOptions();
 
-let ingrList = RecipeHandler.getIngridientList();
+$('#add_recipe_field').on('click', WebpageHandler.addRecipeField);
 
-webpageHandler.addOptions();
+$('#input-submit').on('click', WebpageHandler.submitRecipe);
 
-$('#add_recipe_field').on('click', webpageHandler.addRecipeField(ingrList));
+$('.ingredient').on('focus', WebpageHandler.autoCompleteIngredient);
 
-$('#input-submit').on('click', webpageHandler.submitRecipe);
-
-$('.ingredient').on('focus', webpageHandler.autoCompleteIngredient(ingrList));
+$('.categories').on('focus', WebpageHandler.autoCompleteCat);

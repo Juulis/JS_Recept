@@ -13,7 +13,6 @@ class RecipeHandler {
                 }
             });
         })();
-
         return list;
 
     }

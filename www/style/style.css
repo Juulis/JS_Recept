@@ -41,8 +41,8 @@ summary {
     display: block;
 }
 
-a:hover{
-    color:currentColor;
+a:hover {
+    color: currentColor;
     text-decoration: none;
 }
 
@@ -147,7 +147,8 @@ aside a {
     color: rgb(99, 78, 39);
 }
 
-aside .panel-heading:hover, .list-group-item:hover {
+aside .panel-heading:hover,
+.list-group-item:hover {
     cursor: pointer;
     background: burlywood;
 }
@@ -160,7 +161,7 @@ aside .panel-heading:hover, .list-group-item:hover {
 /* Footer
 -----------------------------------------------------------------------------*/
 
-.footer div{
+.footer div {
     height: 60px;
     background: #BFF08E;
     display: flex;
@@ -178,13 +179,13 @@ aside .panel-heading:hover, .list-group-item:hover {
     top: 20px;
 }
 
-.footer .addrecipediv{
- float:left;   
- padding-left: 30%;
+.footer .addrecipediv {
+    float: left;
+    padding-left: 30%;
 }
 
-.new-recipe{
-    color:grey;
+.new-recipe {
+    color: grey;
     cursor: pointer;
     font-family: fantasy;
     font-size: 15px;
@@ -195,7 +196,7 @@ aside .panel-heading:hover, .list-group-item:hover {
 /* Forms
 -------------------------------------------------------------------------------*/
 
-@import url(https: //fonts.googleapis.com/css?family=Merriweather);
+@import url(https://fonts.googleapis.com/css?family=Merriweather);
 
 *,
 *:before,
@@ -265,7 +266,7 @@ form #input-submit:hover {
 }
 
 form textarea {
-    height: 300px;
+    height: 500px;
 }
 
 .ingredient_member {
@@ -273,7 +274,18 @@ form textarea {
     width: 125px;
 }
 
-.unit, .amount {
+.portions {
+    float: right;
+    margin-top: 20px;
+    margin-right: 20%;
+    width: 90px;
+}
+
+#add_recipe_field {
+    float: left;
+}
+
+.short {
     width: 70px;
 }
 
@@ -290,11 +302,12 @@ form textarea {
 .left {
     margin-right: 2%;
 }
-.login input{
-    font-size:16px;
+
+.login input {
+    font-size: 16px;
 }
 
-.modal-title{
+.modal-title {
     margin: auto;
     justify-content: center;
     text-align: center;

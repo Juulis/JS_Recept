@@ -1,6 +1,6 @@
 class WebpageHandler {
 
-    addOptions() {
+    static addOptions() {
         let units = ["dl", "cl", "ml", "msk", "krdm", "kg", "g", "st", "liter"];
         let unitString = "";
 
@@ -13,18 +13,20 @@ class WebpageHandler {
         element.append(unitString);
     }
 
-    addRecipeField(list) {
+    static addRecipeField() {
         $('.ingredient_group').last().after(`
         <div class="ingredient_group">
         <input type="text" name="ingredient" class="ingredient ingredient_member" placeholder="ingr från lista"/>
         <input type="text" name="ingredient_name" class="ingredient_name ingredient_member" placeholder="ingr visningsnamn"/>
-        <input type="text" name="amount" class="amount ingredient_member" placeholder="Mängd"/>
-        <select type="text" name="unit" class="unit ingredient_member" placeholder="Enhet"></select>
+        <br>
+        <input type="text" name="amount" class="amount short ingredient_member" placeholder="Mängd"/>
+        <select type="text" name="unit" class="unit short ingredient_member" placeholder="Enhet"></select>
+        <input type="text" name="gram" class="gram short ingredient_member" placeholder="I gram"/>
         <hr>
         </div>
         `);
-        this.addOptions();
-        $('.ingredient').on('focus', this.autoCompleteIngredient(list));
+        WebpageHandler.addOptions();
+        $('.ingredient').on('focus', WebpageHandler.autoCompleteIngredient);
     }
 
     static search() {
@@ -43,11 +45,34 @@ class WebpageHandler {
         $('.ui-autocomplete').css('max-width', '250px')
     }
 
-    autoCompleteIngredient(list) {
+    static autoCompleteIngredient() {
+        let ingrList = RecipeHandler.getIngridientList();
         $('.ingredient').autocomplete({
-            source: list
+            source: ingrList
         });
         $('.ui-helper-hidden-accessible').css('display', 'none');
+    }
+    static autoCompleteCat(){
+        let catList = [];
+        let getCategorylist = (function () {
+            let getCategorylist = null;
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: `/getcategorylist`,
+                success: function (response) {
+                    catList = response;
+                }
+            });
+        })();
+        
+        $('.categories').autocomplete({
+            source: catList
+        });
+        $('.ui-helper-hidden-accessible').css('display', 'none');
+    
+
+
     }
 
     static capFirstLetter(string) {
@@ -56,17 +81,12 @@ class WebpageHandler {
         return formatedString;
     }
 
-    submitRecipe() {
+    static submitRecipe() {
         let recipe = new Recipe();
         let ingredients = [];
 
-        let tags = ($('.tags').val());
         let categories = ($('.categories').val());
 
-        //check array inputs
-        if (tags == undefined || tags == "") {
-            recipe.tags = undefined;
-        }
         if (categories == undefined || categories == "") {
             recipe.categories = undefined;
         }
@@ -74,7 +94,6 @@ class WebpageHandler {
         //Format and set recipe from inputs
         recipe.name = WebpageHandler.capFirstLetter($('.recipe_name').val());
         recipe.description = $('.description').val();
-        recipe.tags = $('.tags').val().split(',').map(string => WebpageHandler.capFirstLetter(string));
         recipe.categories = $('.categories').val().split(',').map(string => WebpageHandler.capFirstLetter(string));
         if ($('.imgsrc').val() != '') {
             recipe.img = $('.imgsrc').val();
@@ -86,7 +105,6 @@ class WebpageHandler {
             $this.children('.ingredient_member').each(function () {
                 let input = $(this);
                 let val = input.val();
-
                 if (val != undefined && val != "") {
                     if (input.attr('name') == "ingredient_name") {
                         ingredient.name = val;
