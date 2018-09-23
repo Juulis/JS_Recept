@@ -7,13 +7,13 @@ class Recipe {
   get nutrition() {
     let nutritionSum = new Nutrition();
     for (let item of this.ingredients) {
+      Object.setPrototypeOf(item, Ingredient.prototype);
       nutritionSum.vitaminA += item.nutrition.vitaminA;
       nutritionSum.vitaminB6 += item.nutrition.vitaminB6;
       nutritionSum.vitaminB12 += item.nutrition.vitaminB12;
       nutritionSum.vitaminC += item.nutrition.vitaminC;
       nutritionSum.vitaminD += item.nutrition.vitaminD;
       nutritionSum.vitaminE += item.nutrition.vitaminE;
-      nutritionSum.energiKj += item.nutrition.energiKj;
       nutritionSum.energiKcal += item.nutrition.energiKcal;
       nutritionSum.kolhydrater += item.nutrition.kolhydrater;
       nutritionSum.protein += item.nutrition.protein;
@@ -34,6 +34,9 @@ class Recipe {
   get img(){
     return this._img;
   }
+  get portions(){
+    return this._portions;
+  }
 
   set categories(categories) {
     this.okOrError(
@@ -46,11 +49,13 @@ class Recipe {
   }
 
   set name(name) {
+    let arr = RecipeHandler.getRecipeList();
     this.okOrError(
       'name', name,
       'Måste finnas ett namn på receptet! Minst två bokstäver!',
       typeof name == 'string' &&
-      name.length >= 2
+      name.length >= 2 &&
+      (!arr.includes(name))
     );
     this._name = name;
   }
@@ -92,6 +97,15 @@ class Recipe {
       img.length >= 1
     );
     this._img = img;
+  }
+
+  set portions(portions) {
+    this.okOrError(
+      'portions', portions,
+      'Du måste fylla i hur många antal portioner receptet gäller',
+      portions >= 1
+    );
+    this._portions = portions;
   }
 
   okOrError(propName, propVal, errorMessage, ok) {

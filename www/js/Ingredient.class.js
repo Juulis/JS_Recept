@@ -15,6 +15,9 @@ class Ingredient {
     get nutrition(){
         return this._nutrition;
     }
+    get gram(){
+        return this._gram;
+    }
 
     set id(id) {
         let arr = RecipeHandler.getIngridientList();
@@ -66,6 +69,15 @@ class Ingredient {
         );
         this._nutrition = nutrition;
       }
+
+      set gram(gram) {
+        this.okOrError(
+            'gram', gram,
+            'Du måste skriva in gram! Uppskatta från vald enhet till gram!',
+            gram >= 1
+        );
+        this._gram = gram;
+    }
 
     okOrError(propName, propVal, errorMessage, ok) {
         if (ok) {

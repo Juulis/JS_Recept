@@ -18,8 +18,6 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
-let Nutrition = require('./www/js/nutrition.class');
-let nutrition = new Nutrition();
 let Routes = require('./routes');
 // Require the Routes class - that sets all 
 // REST-like routes

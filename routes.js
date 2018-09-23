@@ -16,35 +16,44 @@ module.exports = class Routes {
         res.send('index');
       });
 
-      this.app.get(
-        '/getcategorylist', (req, res) => {
-          let catlist = [];
-          let categories = {};
-          let data = fs.readFileSync('./www/json/recepies.json');
-          data = JSON.parse(data);
-          for (let recepe of data) {
-            for (let category of recepe._categories) {
-              //if category not exists in obj, create cat as prop in categories obj and add it to catlist
-              if (categories[category] == undefined) {
-                catlist.push(category);
-                let key = category,
-                  obj = {
-                    [key]: ['']
-                  };
-                categories[category] = obj[category]
-              }
+    this.app.get(
+      '/getcategorylist', (req, res) => {
+        let catlist = [];
+        let categories = {};
+        let data = fs.readFileSync('./www/json/recepies.json');
+        data = JSON.parse(data);
+        for (let recepe of data) {
+          for (let category of recepe._categories) {
+            //if category not exists in obj, create cat as prop in categories obj and add it to catlist
+            if (categories[category] == undefined) {
+              catlist.push(category);
+              let key = category,
+                obj = {
+                  [key]: ['']
+                };
+              categories[category] = obj[category]
             }
           }
-          res.send(catlist);
-        });
+        }
+        res.send(catlist);
+      });
 
     this.app.post(
-      '/authenticate', (req, res) => {
+      '/authenticate/new', (req, res) => {
         const postBody = req.body;
         if (postBody.user == "Juulis" && postBody.password == "dannyking") {
           return res.sendFile(path.join(__dirname + '/www/add_recipe.html'));
-          
         }
+        res.send('<p>FEL LÖSEN, ÄR DU HACKARE ELLER!?</p>');
+      });
+
+    this.app.post(
+      '/authenticate/edit', (req, res) => {
+        const postBody = req.body;
+        if (postBody.user == "Juulis" && postBody.password == "dannyking") {
+          res.sendFile(path.join(__dirname + '/www/add_recipe.html'));
+          res.send(true);
+        } else
         res.send('<p>FEL LÖSEN, ÄR DU HACKARE ELLER!?</p>');
       });
 
@@ -81,65 +90,52 @@ module.exports = class Routes {
 
     this.app.post(
       '/setnutritions', (req, res) => {
-        let nutrition = app.nutrition;
-        let ingredientList = req.body;
+        let nutrition = {};
+        let recepe = req.body;
+        let ingredientList = recepe._ingredients;
         for (let ingredient of ingredientList) {
-          ingredient.nutrition = setNutrition(ingredient._id);
+          ingredient.nutrition = setNutrition(ingredient._id, ingredient._gram);
         }
 
-        function setNutrition(ingredientID) {
+        function setNutrition(ingredientID, amount) {
           let rawData = fs.readFileSync('./www/json/livsmedelsdata.json');
           let livsmdata = JSON.parse(rawData);
 
           loop1: for (let item of livsmdata) {
             if (item.Namn == ingredientID) {
               loop2: for (let n of item.Naringsvarden.Naringsvarde) {
-                let val = Number(n.Varde.replace(',', '.').replace(/\s+/g, ''));
-                if (n.Namn == "Energi (kJ)") {
-                  nutrition.energiKj = val;
-                  continue loop2;
-                }
+                let val = Number(((n.Varde.replace(',', '.').replace(/\s+/g, '') / 100) * amount));
                 if (n.Namn == "Energi (kcal)") {
                   nutrition.energiKcal = val;
                   continue loop2;
-                }
-                if (n.Namn == "Kolhydrater") {
+                } else if (n.Namn == "Kolhydrater") {
                   nutrition.kolhydrater = val;
                   continue loop2;
-                }
-                if (n.Namn == "Protein") {
+                } else if (n.Namn == "Protein") {
                   nutrition.protein = val;
                   continue loop2;
-                }
-                if (n.Namn == "Fett") {
+                } else if (n.Namn == "Fett") {
                   nutrition.fett = val;
                   continue loop2;
-                }
-                if (n.Namn == "Järn") {
+                } else if (n.Namn == "Järn") {
                   nutrition.jarn = val;
                   continue loop2;
-                }
-                if (n.Namn == "Vitamin A") {
+                } else if (n.Namn == "Vitamin A") {
                   nutrition.vitaminA = val;
                   continue loop2;
-                }
-                if (n.Namn == "Vitamin B6") {
+                } else if (n.Namn == "Vitamin B6") {
                   nutrition.vitaminB6 = val;
                   continue loop2;
-                }
-                if (n.Namn == "Vitamin B12") {
+                } else if (n.Namn == "Vitamin B12") {
                   nutrition.vitaminB12 = val;
                   continue loop2;
-                }
-                if (n.Namn == "Vitamin C") {
+                } else if (n.Namn == "Vitamin C") {
                   nutrition.vitaminC = val;
                   continue loop2;
-                }
-                if (n.Namn == "Vitamin D") {
+                } else if (n.Namn == "Vitamin D") {
                   nutrition.vitaminD = val;
                   continue loop2;
-                }
-                if (n.Namn == "Vitamin E") {
+                } else if (n.Namn == "Vitamin E") {
                   nutrition.vitaminE = val;
                   continue loop2;
                 }
@@ -155,7 +151,6 @@ module.exports = class Routes {
 
     this.app.get(
       '/getrecipe/:recipeid', (req, res) => {
-        let recipe = {};
         let data = fs.readFileSync('./www/json/recepies.json');
         data = JSON.parse(data);
         let found = false;

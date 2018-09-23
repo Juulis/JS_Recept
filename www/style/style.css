@@ -58,6 +58,8 @@ body {
     margin: 0 auto;
 }
 
+
+
 /* Header
 -----------------------------------------------------------------------------*/
 
@@ -160,16 +162,20 @@ aside .panel-heading:hover,
 
 /* Footer
 -----------------------------------------------------------------------------*/
-
-.footer div {
-    height: 60px;
+.footer {
+    display:flex;
     background: #BFF08E;
+    height: 60px;
+}
+.contactdiv {
+    flex:15;
     display: flex;
     justify-content: flex-end;
 }
 
-.footer div img {
-    height: 60px;
+.contactdiv img {
+    height: 40px;
+    margin: auto 0;
 }
 
 .signature {
@@ -179,18 +185,22 @@ aside .panel-heading:hover,
     top: 20px;
 }
 
-.footer .addrecipediv {
-    float: left;
-    padding-left: 30%;
+.addrecipediv, .editrecipediv{
+    flex:1;
+}
+.addrecipediv{
+    margin-left:20%;
 }
 
-.new-recipe {
+.new-recipe, .edit-recipe {
     color: grey;
     cursor: pointer;
     font-family: fantasy;
     font-size: 15px;
     position: relative;
-    top: 20px;
+    top: 10px;
+    padding:0;
+    width:0;
 }
 
 /* Forms
@@ -286,7 +296,7 @@ form textarea {
 }
 
 .short {
-    width: 70px;
+    width: 80px;
 }
 
 .half {
@@ -382,6 +392,23 @@ form textarea {
 }
 
 /* Food presentation */
+
+.food-container ol{
+    margin:0;
+    padding:0;
+}
+
+#portminus,#portplus{
+    color:grey;
+    font-size: 12;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.ingredients-container li {
+    margin: 15px 0px;
+}
+
 .image-container {
     min-height: 200px;
     margin-bottom: 50px;
@@ -400,8 +427,8 @@ main h3 {
 
 .food-container {
     display: flex;
-    white-space: pre;
-    font-family: monospace;
+    white-space: pre-line;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .ingredients-container ol {
@@ -409,17 +436,20 @@ main h3 {
 }
 
 .ingredients-container {
-    float: left;
-    font-size: 20px;
+    flex:1;
+    font-size: 17px;
     margin: 50px;
     padding: 10px;
+    max-width:150px;
+    font-weight: bold;
 }
 
 .instructions-container {
-    float: right;
-    overflow-wrap: normal;
-    margin: 50px;
-    padding: 10ox;
+    flex:2;
+    overflow-wrap: break-word;
+    margin: 10px;
+    padding: 10px;
+    font-size: 18px;
 }
 
 
