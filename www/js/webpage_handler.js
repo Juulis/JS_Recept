@@ -89,6 +89,7 @@ class WebpageHandler {
             dataType: "json",
             success: function (auth) {
                 if (auth) {
+                    console.log('auth:', auth);
                     Object.setPrototypeOf(recepe, Recipe.prototype);
                     $('.recipe_name').val(recepe.name);
                     $('.description').val(recepe.description);
@@ -105,7 +106,7 @@ class WebpageHandler {
                     for (let i in recepe.ingredients) {
                         $(`${ingrElArray[i]} input[name='ingredient']`).val(`${recepe.ingredients[i].id}`);
                     }
-                }
+                } else console.log('nah, not auth');
             }
         });
 
@@ -207,6 +208,7 @@ class WebpageHandler {
         instrContainer.text('');
         imgContainer.text('');
         headerContainer.text('');
+        headerContainer.attr('title','');
         nutrContainer.text('');
         //Apply HTML
         if (foundRecipe == true) {
@@ -229,13 +231,18 @@ class WebpageHandler {
                 imgContainer.append(img);
             }
 
-            //set edit-recipe-id for editingform
+            //set edit-recipe-id for editingform loginprompt
             $('#edit-recipe-id').val(recipe.name);
-            //set tooltip for nutritions on title
-            $('#header').attr('title', JSON.stringify(recipe.nutrition, null, 1));
-            $('[data-toggle="tooltip"]').tooltip();
 
-            //set eventlisteners on new elements
+            //set tooltip for nutritions on title
+            let title = JSON.stringify(recipe.nutrition, null, 1);
+            title = title.replace("{",'');
+            title = title.replace("}",'');
+            console.log(title);
+
+            $('#header').attr('title', title);
+            $('[data-toggle="tooltip"]').tooltip();
+            //set eventlisteners on portion buttons
             $('#portminus').on('click', function () {
                 let port = $('#port');
                 let current = Number(port.text());

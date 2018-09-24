@@ -54,7 +54,7 @@ module.exports = class Routes {
           res.sendFile(path.join(__dirname + '/www/add_recipe.html'));
           res.send(true);
         } else
-        res.send('<p>FEL LÖSEN, ÄR DU HACKARE ELLER!?</p>');
+          res.send('<p>FEL LÖSEN, ÄR DU HACKARE ELLER!?</p>');
       });
 
     this.app.get(
@@ -105,39 +105,42 @@ module.exports = class Routes {
             if (item.Namn == ingredientID) {
               loop2: for (let n of item.Naringsvarden.Naringsvarde) {
                 let val = Number(((n.Varde.replace(',', '.').replace(/\s+/g, '') / 100) * amount));
-                if (n.Namn == "Energi (kcal)") {
-                  nutrition.energiKcal = val;
-                  continue loop2;
-                } else if (n.Namn == "Kolhydrater") {
-                  nutrition.kolhydrater = val;
-                  continue loop2;
-                } else if (n.Namn == "Protein") {
-                  nutrition.protein = val;
-                  continue loop2;
-                } else if (n.Namn == "Fett") {
-                  nutrition.fett = val;
-                  continue loop2;
-                } else if (n.Namn == "Järn") {
-                  nutrition.jarn = val;
-                  continue loop2;
-                } else if (n.Namn == "Vitamin A") {
-                  nutrition.vitaminA = val;
-                  continue loop2;
-                } else if (n.Namn == "Vitamin B6") {
-                  nutrition.vitaminB6 = val;
-                  continue loop2;
-                } else if (n.Namn == "Vitamin B12") {
-                  nutrition.vitaminB12 = val;
-                  continue loop2;
-                } else if (n.Namn == "Vitamin C") {
-                  nutrition.vitaminC = val;
-                  continue loop2;
-                } else if (n.Namn == "Vitamin D") {
-                  nutrition.vitaminD = val;
-                  continue loop2;
-                } else if (n.Namn == "Vitamin E") {
-                  nutrition.vitaminE = val;
-                  continue loop2;
+                //don't add nutrition if it's 0
+                if (val != 0) {
+                  if (n.Namn == "Energi (kcal)") {
+                    nutrition.energiKcal = val;
+                    continue loop2;
+                  } else if (n.Namn == "Kolhydrater") {
+                    nutrition.kolhydrater = val;
+                    continue loop2;
+                  } else if (n.Namn == "Protein") {
+                    nutrition.protein = val;
+                    continue loop2;
+                  } else if (n.Namn == "Fett") {
+                    nutrition.fett = val;
+                    continue loop2;
+                  } else if (n.Namn == "Järn") {
+                    nutrition.jarn = val;
+                    continue loop2;
+                  } else if (n.Namn == "Vitamin A") {
+                    nutrition.vitaminA = val;
+                    continue loop2;
+                  } else if (n.Namn == "Vitamin B6") {
+                    nutrition.vitaminB6 = val;
+                    continue loop2;
+                  } else if (n.Namn == "Vitamin B12") {
+                    nutrition.vitaminB12 = val;
+                    continue loop2;
+                  } else if (n.Namn == "Vitamin C") {
+                    nutrition.vitaminC = val;
+                    continue loop2;
+                  } else if (n.Namn == "Vitamin D") {
+                    nutrition.vitaminD = val;
+                    continue loop2;
+                  } else if (n.Namn == "Vitamin E") {
+                    nutrition.vitaminE = val;
+                    continue loop2;
+                  }
                 }
               }
               break loop1;
