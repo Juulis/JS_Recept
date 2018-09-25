@@ -143,7 +143,7 @@ class WebpageHandler {
                 let val = input.val();
                 if (val != undefined && val != "") {
                     if (input.attr('name') == "ingredient_name") {
-                        ingredient.name = val;
+                        ingredient.name = WebpageHandler.capFirstLetter(val);
                     } else if (input.attr('name') == "ingredient") {
                         ingredient.id = val;
                     } else if (input.attr('name') == "amount") {
@@ -202,14 +202,23 @@ class WebpageHandler {
         let instrContainer = $('.instructions-container');
         let imgContainer = $('.image-container');
         let headerContainer = $('#header');
-        let nutrContainer = $('.nutritions-container');
+        let nutrButton = $(`
+            <p>
+                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Nutritions
+                </a>
+            </p>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                </div>
+            </div>
+      `);
         //empty HTML
         ingrContainer.text('');
         instrContainer.text('');
         imgContainer.text('');
         headerContainer.text('');
-        headerContainer.attr('title','');
-        nutrContainer.text('');
+        let gram = 0;
         //Apply HTML
         if (foundRecipe == true) {
             Object.setPrototypeOf(recipe, Recipe.prototype);
@@ -220,10 +229,11 @@ class WebpageHandler {
             for (const ingredient of ingredients) {
                 let li = $(`<li><span class="display-amount">${ingredient._amount}</span> ${ingredient._unit} ${ingredient._name}</li>`);
                 ol.append(li);
+                gram += Number(ingredient._gram);
             }
 
             ingrContainer.append(ol);
-            ingrContainer.append(nutrContainer);
+            ingrContainer.append(nutrButton);
             instrContainer.append(recipe.description);
             headerContainer.append(recipe.name);
             if (recipe.img != undefined) {
@@ -234,31 +244,68 @@ class WebpageHandler {
             //set edit-recipe-id for editingform loginprompt
             $('#edit-recipe-id').val(recipe.name);
 
-            //set tooltip for nutritions on title
-            let title = JSON.stringify(recipe.nutrition, null, 1);
-            title = title.replace("{",'');
-            title = title.replace("}",'');
-            console.log(title);
+            //setup nutrition display
+            let nutrdiv = $('#collapseExample div');
+            let nutrObj = recipe.nutrition;
+            let ul = $('<ul></ul>');
+            for (let item in nutrObj) {
+                let n = nutrObj[item];
+                if (n != 0 && n != '0') {
+                    console.log('gram:',gram,'item:',item,'n:',n);
+                    n = (Number(n)/gram)*100;
+                    if (n.toString().length > 5) {
+                        let arr = n.toString().split('.');
+                        if (arr[1].length > 2) {
+                            arr[1] = arr[1].substring(0, 5);
+                        }
+                        n = Number(arr[0] + '.' + arr[1]);
+                    }
+                    let li = $(`<li>${item}: <span class='nutrli'> ${n}</span></li>`);
+                    ul.append(li);
+                }
+            }
+            nutrdiv.append($('<p>per 100g</p>'));
+            nutrdiv.append(ul);
 
-            $('#header').attr('title', title);
-            $('[data-toggle="tooltip"]').tooltip();
+
+            //removed, not need if showing per 100g
+            /* function changeNutrition(currentInt, newInt) {
+                let nrSpan = $('.nutrli');
+                nrSpan.each(function () {
+                    let nr = $(this).text();
+                    nr = (Number(nr) / Number(currentInt)) * Number(newInt);
+                    if (nr.toString().length > 5) {
+                        let arr = nr.toString().split('.');
+                        if (arr[1].length > 2) {
+                            arr[1] = arr[1].substring(0, 2);
+                        }
+                        nr = Number(arr[0] + '.' + arr[1]);
+                    }
+                    $(this).text(nr);
+                });
+
+            } */
+
+
+
+
             //set eventlisteners on portion buttons
             $('#portminus').on('click', function () {
                 let port = $('#port');
                 let current = Number(port.text());
                 if (current > 1) {
                     port.text(current - 1);
-                    changeAmount(current - 1, current);
+                    changeAmount(current, current - 1);
                 }
             });
             $('#portplus').on('click', function () {
                 let port = $('#port');
                 let current = Number(port.text());
                 port.text(current + 1);
-                changeAmount(current + 1, current);
+                changeAmount(current, current + 1);
             });
 
-            function changeAmount(newInt, currentInt) {
+            function changeAmount(currentInt, newInt) {
                 $('.display-amount').each(function () {
                     let el = $(this);
                     let currentAmount = Number(el.text());

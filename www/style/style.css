@@ -393,6 +393,10 @@ form textarea {
 
 /* Food presentation */
 
+#collapseExample{
+    min-width:250px;
+}
+
 .food-container ol{
     margin:0;
     padding:0;

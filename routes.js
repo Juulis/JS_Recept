@@ -104,9 +104,18 @@ module.exports = class Routes {
           loop1: for (let item of livsmdata) {
             if (item.Namn == ingredientID) {
               loop2: for (let n of item.Naringsvarden.Naringsvarde) {
-                let val = Number(((n.Varde.replace(',', '.').replace(/\s+/g, '') / 100) * amount));
+                let val = (Number(n.Varde.replace(',', '.').replace(/\s+/g, '')) / 100) * amount;
+                if (n.Enhet == 'g') {
+                  val = (Number(n.Varde.replace(',', '.').replace(/\s+/g, '')) / 100) * amount;
+                }
+                if (n.Enhet == 'mg') {
+                  val = (Number(n.Varde.replace(',', '.').replace(/\s+/g, '')) / 1000) * amount;
+                }
+                if (n.Enhet == 'µg') {
+                  val = (Number(n.Varde.replace(',', '.').replace(/\s+/g, '')) / 1000000) * amount;
+                }
                 //don't add nutrition if it's 0
-                if (val != 0) {
+                if (val != 0 && val != undefined) {
                   if (n.Namn == "Energi (kcal)") {
                     nutrition.energiKcal = val;
                     continue loop2;

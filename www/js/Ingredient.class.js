@@ -12,21 +12,19 @@ class Ingredient {
     get id() {
         return this._id;
     }
-    get nutrition(){
+    get nutrition() {
         return this._nutrition;
     }
-    get gram(){
+    get gram() {
         return this._gram;
     }
 
     set id(id) {
-        let arr = RecipeHandler.getIngridientList();
         this.okOrError(
             'id', id,
             `"ingr från lista" måste vara en produkt från livsmedelsverkets lista!`,
             typeof id == 'string' &&
-            id.length >= 2 &&
-            arr.includes(id)
+            id.length >= 2
         );
         this._id = id;
     }
@@ -63,14 +61,14 @@ class Ingredient {
 
     set nutrition(nutrition) {
         this.okOrError(
-          'nutrition', nutrition,
-          'must be an object with nutrition info',
-          nutrition instanceof Nutrition
+            'nutrition', nutrition,
+            'must be an object with nutrition info',
+            nutrition instanceof Nutrition
         );
         this._nutrition = nutrition;
-      }
+    }
 
-      set gram(gram) {
+    set gram(gram) {
         this.okOrError(
             'gram', gram,
             'Du måste skriva in gram! Uppskatta från vald enhet till gram!',

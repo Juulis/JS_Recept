@@ -3,7 +3,7 @@ class Recipe {
   get name() {
     return this._name;
   }
-  
+
   get nutrition() {
     let nutritionSum = new Nutrition();
     for (let item of this.ingredients) {
@@ -31,10 +31,10 @@ class Recipe {
   get categories() {
     return this._categories;
   }
-  get img(){
+  get img() {
     return this._img;
   }
-  get portions(){
+  get portions() {
     return this._portions;
   }
 
@@ -70,9 +70,21 @@ class Recipe {
   }
 
   set ingredients(ingredients) {
+    let bool = function () {
+      let arr = RecipeHandler.getIngridientList();
+      let boole = true;
+      for (let ingredient of ingredients) {
+        if (!(arr.includes(ingredient._id))) {
+          boole = false;
+        }
+      }
+      console.log('boole:',boole);
+      return boole;
+    };
     this.okOrError(
       'ingredients', ingredients,
-      'Det måste finnas ingredienter!',
+      'Det måste finnas ingredienter och "ingr från lista" måste vara en produkt från livsmedelsverkets lista!',
+       bool() &&
       Array.isArray(ingredients) &&
       ingredients.length >= 1
     );

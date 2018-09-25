@@ -34,7 +34,7 @@ class RecipeHandler {
             for (let item of json) {
                 list.push(item._name);
             }
-        })();
+        });
         return list;
     }
 
