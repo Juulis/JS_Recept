@@ -14,4 +14,8 @@ $('#edit-recipe-btn').on('click', function(){
     WebpageHandler.editRecipe(recepe);
 });
 
-
+let strArr = location.search.split('=');
+if (strArr[0] == 'edit_recipe.html?id' && strArr > 1){
+console.log(strArr);
+    WebpageHandler.editRecipe(RecipeHandler.getRecipe(strArr[1]));
+}

@@ -30,7 +30,6 @@ class WebpageHandler {
     }
 
     static search() {
-        //TODO wtf is wrong with this method? Can't call a sibling method with 'this'...
         let field = $("#searchfield");
         let input = field.val();
         field.val('');
@@ -38,11 +37,20 @@ class WebpageHandler {
     }
 
     static autoCompleteSearch() {
+        let list = RecipeHandler.getRecipeList();
         $('#searchfield').autocomplete({
-            source: RecipeHandler.getRecipeList()
+            source: list
         });
         $('.ui-helper-hidden-accessible').css('display', 'none');
         $('.ui-autocomplete').css('max-width', '250px')
+    }
+
+    static autoCompleteName() {
+        let recList = RecipeHandler.getRecipeList();
+        $('.recipe_name').autocomplete({
+            source: recList
+        });
+        $('.ui-helper-hidden-accessible').css('display', 'none');
     }
 
     static autoCompleteIngredient() {
@@ -81,34 +89,80 @@ class WebpageHandler {
         return formatedString;
     }
 
-    static editRecipe(recepe) {
-        $('#editprompt').
-        ajaxForm({
-            type: "POST",
-            url: '/authenticate/edit',
-            dataType: "json",
-            success: function (auth) {
-                if (auth) {
-                    console.log('auth:', auth);
-                    Object.setPrototypeOf(recepe, Recipe.prototype);
-                    $('.recipe_name').val(recepe.name);
-                    $('.description').val(recepe.description);
-                    $('.categories').val(recepe.categories.join());
-                    $('.imgsrc').val(recepe.img);
-                    $('.portions').val(recepe.portions);
+    static editRecipe() {
 
-                    for (let i = 3; i < recepe.ingredients.length; i++) {
-                        WebpageHandler.addRecipeField();
-                    }
+        let recepe = RecipeHandler.getRecipe($('.recipe_name').val());
 
-                    let ingrElArray = $('.ingredient_group').toArray();
+        Object.setPrototypeOf(recepe, Recipe.prototype);
+        $('.recipe_name').val(recepe.name);
+        $('.description').val(recepe.description);
+        $('.categories').val(recepe.categories.join());
+        $('.imgsrc').val(recepe.img);
+        $('.portions').val(recepe.portions);
 
-                    for (let i in recepe.ingredients) {
-                        $(`${ingrElArray[i]} input[name='ingredient']`).val(`${recepe.ingredients[i].id}`);
-                    }
-                } else console.log('nah, not auth');
-            }
-        });
+        for (let i = 3; i < recepe.ingredients.length; i++) {
+            WebpageHandler.addRecipeField();
+        }
+
+        let ingrElArray = $('.ingredient_group').toArray();
+        for (let i in recepe.ingredients) {
+            let el = ingrElArray[i].children;
+            let ingr = recepe.ingredients[i];
+            el.ingredient.value = ingr._id;
+            el.ingredient_name.value = ingr._name;
+            el.amount.value = ingr._amount;
+            el.unit.value = ingr._unit;
+            el.gram.value = ingr._gram;
+        }
+
+        /*
+        :
+        input.ingredient.ingredient_member.ui-autocomplete-input
+        1
+        :
+        input.ingredient_name.ingredient_member
+        2
+        :
+        br
+        3
+        :
+        input.amount.short.ingredient_member
+        4
+        :
+        select.unit.short.ingredient_member
+        5
+        :
+        input.gram.short.ingredient_member*/
+
+
+
+        /* $('#editprompt').
+         ajaxForm({
+             type: "POST",
+             url: '/authenticate/edit',
+             dataType: "json",
+             success: function (auth) {
+                 if (auth) {
+                     console.log('auth:', auth);
+                     Object.setPrototypeOf(recepe, Recipe.prototype);
+                     $('.recipe_name').val(recepe.name);
+                     $('.description').val(recepe.description);
+                     $('.categories').val(recepe.categories.join());
+                     $('.imgsrc').val(recepe.img);
+                     $('.portions').val(recepe.portions);
+ 
+                     for (let i = 3; i < recepe.ingredients.length; i++) {
+                         WebpageHandler.addRecipeField();
+                     }
+ 
+                     let ingrElArray = $('.ingredient_group').toArray();
+ 
+                     for (let i in recepe.ingredients) {
+                         $(`${ingrElArray[i]} input[name='ingredient']`).val(`${recepe.ingredients[i].id}`);
+                     }
+                 } else console.log('nah, not auth');
+             }
+         });*/
 
 
 

@@ -7,3 +7,7 @@ $('#input-submit').on('click', WebpageHandler.submitRecipe);
 $('.ingredient').on('focus', WebpageHandler.autoCompleteIngredient);
 
 $('.categories').on('focus', WebpageHandler.autoCompleteCat);
+
+$('#editbtn').on('click', WebpageHandler.editRecipe);
+
+$('.recipe_name').on('focus', WebpageHandler.autoCompleteName);

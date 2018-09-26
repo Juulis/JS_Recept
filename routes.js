@@ -11,6 +11,10 @@ module.exports = class Routes {
     const path = require('path');
     const fs = require('fs');
 
+    this.app.get('/about_us', (req, res) => {
+      res.send('<p>Detta är Dannys aka Juulis receptbok, smaka recepten på egen risk!</p>');
+    });
+
     this.app.get(
       '/', (req, res) => {
         res.send('index');
@@ -47,15 +51,25 @@ module.exports = class Routes {
         res.send('<p>FEL LÖSEN, ÄR DU HACKARE ELLER!?</p>');
       });
 
+
+    this.app.get(
+      '/add_recipe?id/:recipeid', (req, res) => {
+        res.send('index');
+        return res.sendFile(path.join(__dirname + '/www/add_recipe.html'));
+      });
+
     this.app.post(
       '/authenticate/edit', (req, res) => {
         const postBody = req.body;
         if (postBody.user == "Juulis" && postBody.password == "dannyking") {
-          res.sendFile(path.join(__dirname + '/www/add_recipe.html'));
-          res.send(true);
+          res.set('L')
+          res.redirect(302, '/add_recipe?id/' + req.recipe);
         } else
           res.send('<p>FEL LÖSEN, ÄR DU HACKARE ELLER!?</p>');
       });
+
+
+
 
     this.app.get(
       '/json/searchlist', (req, res) => {
@@ -65,7 +79,7 @@ module.exports = class Routes {
         for (let item of recepies) {
           list.push(item._name);
         }
-        res.send(list);
+        return res.send(list);
       });
 
     this.app.get(
@@ -99,7 +113,7 @@ module.exports = class Routes {
         function setNutrition(ingredientID, amount) {
           let rawData = fs.readFileSync('./www/json/livsmedelsdata.json');
           let livsmdata = JSON.parse(rawData);
-          
+
           loop1: for (let item of livsmdata) {
             if (item.Namn == ingredientID) {
               loop2: for (let n of item.Naringsvarden.Naringsvarde) {

@@ -23,18 +23,15 @@ class RecipeHandler {
         let json = (function () {
             let json = null;
             $.ajax({
-                'async': false,
-                'global': false,
-                'url': '/json/recepies.json',
-                'dataType': "json",
-                'success': function (data) {
-                    json = data;
+                type: "GET",
+                async: false,
+                url: '/json/searchlist',
+                success: function (data) {
+                    list = data;
                 }
             });
-            for (let item of json) {
-                list.push(item._name);
-            }
         });
+        json();
         return list;
     }
 
