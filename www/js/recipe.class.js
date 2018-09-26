@@ -8,17 +8,17 @@ class Recipe {
     let nutritionSum = new Nutrition();
     for (let item of this.ingredients) {
       Object.setPrototypeOf(item, Ingredient.prototype);
-      nutritionSum.vitaminA += item.nutrition.vitaminA;
-      nutritionSum.vitaminB6 += item.nutrition.vitaminB6;
-      nutritionSum.vitaminB12 += item.nutrition.vitaminB12;
-      nutritionSum.vitaminC += item.nutrition.vitaminC;
-      nutritionSum.vitaminD += item.nutrition.vitaminD;
-      nutritionSum.vitaminE += item.nutrition.vitaminE;
-      nutritionSum.energiKcal += item.nutrition.energiKcal;
-      nutritionSum.kolhydrater += item.nutrition.kolhydrater;
-      nutritionSum.protein += item.nutrition.protein;
-      nutritionSum.fett += item.nutrition.fett;
-      nutritionSum.jarn += item.nutrition.jarn;
+      item.nutrition.vitaminA != 0 || '0' ? nutritionSum.vitaminA += item.nutrition.vitaminA : false;
+      item.nutrition.vitaminB6 != 0 || '0'  ? nutritionSum.vitaminB6 += item.nutrition.vitaminB6 : false;
+      item.nutrition.vitaminB12 != 0 || '0'  ? nutritionSum.vitaminB12 += item.nutrition.vitaminB12 : false;
+      item.nutrition.vitaminC != 0 || '0'  ? nutritionSum.vitaminC += item.nutrition.vitaminC : false;
+      item.nutrition.vitaminD != 0 || '0'  ? nutritionSum.vitaminD += item.nutrition.vitaminD : false;
+      item.nutrition.vitaminD != 0 || '0'  ? nutritionSum.vitaminE += item.nutrition.vitaminE : false;
+      item.nutrition.energiKcal != 0 || '0'  ? nutritionSum.energiKcal += item.nutrition.energiKcal : false;
+      item.nutrition.kolhydrater != 0 || '0'  ? nutritionSum.kolhydrater += item.nutrition.kolhydrater : false;
+      item.nutrition.protein != 0 || '0'  ? nutritionSum.protein += item.nutrition.protein : false;
+      item.nutrition.fett != 0 || '0'  ? nutritionSum.fett += item.nutrition.fett : false;
+      item.nutrition.jarn != 0 || '0'  ? nutritionSum.jarn += item.nutrition.jarn : false;
     }
     return nutritionSum;
   }
@@ -78,7 +78,6 @@ class Recipe {
           boole = false;
         }
       }
-      console.log('boole:',boole);
       return boole;
     };
     this.okOrError(

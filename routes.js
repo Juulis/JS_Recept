@@ -91,8 +91,7 @@ module.exports = class Routes {
     this.app.post(
       '/setnutritions', (req, res) => {
         let nutrition = {};
-        let recepe = req.body;
-        let ingredientList = recepe._ingredients;
+        let ingredientList = req.body;
         for (let ingredient of ingredientList) {
           ingredient.nutrition = setNutrition(ingredient._id, ingredient._gram);
         }
@@ -100,7 +99,7 @@ module.exports = class Routes {
         function setNutrition(ingredientID, amount) {
           let rawData = fs.readFileSync('./www/json/livsmedelsdata.json');
           let livsmdata = JSON.parse(rawData);
-
+          
           loop1: for (let item of livsmdata) {
             if (item.Namn == ingredientID) {
               loop2: for (let n of item.Naringsvarden.Naringsvarde) {

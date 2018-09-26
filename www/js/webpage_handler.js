@@ -19,7 +19,7 @@ class WebpageHandler {
         <input type="text" name="ingredient" class="ingredient ingredient_member" placeholder="ingr från lista"/>
         <input type="text" name="ingredient_name" class="ingredient_name ingredient_member" placeholder="ingr visningsnamn"/>
         <br>
-        <input type="text" name="amount" class="amount short ingredient_member" placeholder="Mängd"/>
+        <input type="amount" name="amount" class="amount short ingredient_member" placeholder="Mängd"/>
         <select type="text" name="unit" class="unit short ingredient_member" placeholder="Enhet"></select>
         <input type="number" name="gram" class="gram short ingredient_member" placeholder="I gram"/>
         <hr>
@@ -148,13 +148,12 @@ class WebpageHandler {
                         ingredient.id = val;
                     } else if (input.attr('name') == "amount") {
                         ingredient.amount = val;
+                        ingredient.gram = val;
                     } else if (input.attr('name') == "unit") {
                         ingredient.unit = val;
                     } else if (input.attr('name') == "gram") {
                         //if unit is gram, no need to fill gram input
-                        if (ingredient.unit == 'g') {
-                            ingredient.gram = ingredient.unit;
-                        } else {
+                        if (ingredient.unit != 'g') {
                             ingredient.gram = val;
                         }
                     }
@@ -174,9 +173,7 @@ class WebpageHandler {
             }
         });
 
-        recipe.ingredients = ingredients;
-        let ingrWithNutrition = RecipeHandler.setNutritionValues(recipe);
-        recipe.ingredients = ingrWithNutrition;
+        recipe.ingredients = RecipeHandler.setNutritionValues(ingredients);
 
         let recipeJson = JSON.stringify(recipe);
         $.ajax({
@@ -250,9 +247,8 @@ class WebpageHandler {
             let ul = $('<ul></ul>');
             for (let item in nutrObj) {
                 let n = nutrObj[item];
-                if (n != 0 && n != '0') {
-                    console.log('gram:',gram,'item:',item,'n:',n);
-                    n = (Number(n)/gram)*100;
+                if (n != 0 && n != '0' && !isNaN(n)) {
+                    n = (Number(n) / gram) * 100;
                     if (n.toString().length > 5) {
                         let arr = n.toString().split('.');
                         if (arr[1].length > 2) {

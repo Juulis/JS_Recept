@@ -54,16 +54,16 @@ class RecipeHandler {
         return json;
     }
 
-    static setNutritionValues(recepe) {
+    static setNutritionValues(ingredients) {
         //TODO get back a new list with nutritions set.
         let ingrList = null;
-        let recepeJson = JSON.stringify(recepe);
+        let jsonIngrs = JSON.stringify(ingredients);
         $.ajax({
             async: false,
             type: "POST",
             url: '/setnutritions',
             contentType: "application/json",
-            data: recepeJson,
+            data: jsonIngrs,
             success: function (response) {
                 ingrList = response;
             }

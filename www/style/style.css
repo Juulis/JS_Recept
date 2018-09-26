@@ -393,6 +393,21 @@ form textarea {
 
 /* Food presentation */
 
+.card-body{
+    margin:0;
+    padding:0;
+    font-weight: normal;
+}
+.card-body p{
+    padding-left:60px;
+}
+
+.btn-primary{
+    background-color: burlywood;
+}
+.btn-primary:hover{
+    background-color: #a8a8a8;
+}
 #collapseExample{
     min-width:250px;
 }
