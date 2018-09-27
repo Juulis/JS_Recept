@@ -49,13 +49,11 @@ class Recipe {
   }
 
   set name(name) {
-    let arr = RecipeHandler.getRecipeList();
     this.okOrError(
       'name', name,
       'Måste finnas ett namn på receptet! Minst två bokstäver!',
       typeof name == 'string' &&
-      name.length >= 2 &&
-      (!arr.includes(name))
+      name.length >= 2
     );
     this._name = name;
   }

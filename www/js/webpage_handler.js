@@ -62,18 +62,7 @@ class WebpageHandler {
     }
     static autoCompleteCat() {
         let catList = [];
-        let getCategorylist = (function () {
-            let getCategorylist = null;
-            $.ajax({
-                type: "GET",
-                async: false,
-                url: `/getcategorylist`,
-                success: function (response) {
-                    catList = response;
-                }
-            });
-        })();
-
+        catList = RecipeHandler.getCategoryList();
         $('.categories').autocomplete({
             source: catList
         });
@@ -115,132 +104,91 @@ class WebpageHandler {
             el.gram.value = ingr._gram;
         }
 
-        /*
-        :
-        input.ingredient.ingredient_member.ui-autocomplete-input
-        1
-        :
-        input.ingredient_name.ingredient_member
-        2
-        :
-        br
-        3
-        :
-        input.amount.short.ingredient_member
-        4
-        :
-        select.unit.short.ingredient_member
-        5
-        :
-        input.gram.short.ingredient_member*/
-
-
-
-        /* $('#editprompt').
-         ajaxForm({
-             type: "POST",
-             url: '/authenticate/edit',
-             dataType: "json",
-             success: function (auth) {
-                 if (auth) {
-                     console.log('auth:', auth);
-                     Object.setPrototypeOf(recepe, Recipe.prototype);
-                     $('.recipe_name').val(recepe.name);
-                     $('.description').val(recepe.description);
-                     $('.categories').val(recepe.categories.join());
-                     $('.imgsrc').val(recepe.img);
-                     $('.portions').val(recepe.portions);
- 
-                     for (let i = 3; i < recepe.ingredients.length; i++) {
-                         WebpageHandler.addRecipeField();
-                     }
- 
-                     let ingrElArray = $('.ingredient_group').toArray();
- 
-                     for (let i in recepe.ingredients) {
-                         $(`${ingrElArray[i]} input[name='ingredient']`).val(`${recepe.ingredients[i].id}`);
-                     }
-                 } else console.log('nah, not auth');
-             }
-         });*/
-
-
-
     }
 
     static submitRecipe() {
+
+        let recList = RecipeHandler.getRecipeList();
+
         let recipe = new Recipe();
         let ingredients = [];
 
-        let categoryinput = $('.categories').val();
+        let okToSave = true;
+        let editRecipe = false;
 
-        //Format and set recipe from inputs
+        //check if recipe already exist
         recipe.name = WebpageHandler.capFirstLetter($('.recipe_name').val());
-        recipe.description = $('.description').val();
-        if (categoryinput != undefined && categoryinput != '') {
-            recipe.categories = categoryinput.split(',').map(string => WebpageHandler.capFirstLetter(string));
-        } else {
-            recipe.categories = undefined;
-        }
-        recipe.portions = $('.portions').val();
-        if ($('.imgsrc').val() != '') {
-            recipe.img = $('.imgsrc').val();
+        if (recList.includes(recipe.name)) {
+            if (confirm(`Du skriver över befintligt recept: ${recipe.name}`)) {
+                okToSave = true;
+                editRecipe = true;
+            } else {
+                okToSave = false;
+            }
         }
 
+        if (editRecipe) {
+            RecipeHandler.deleteRecipe(recipe.name);
+        }
+
+        if (okToSave) {
+            //Format and set recipe from inputs
+            let categoryinput = $('.categories').val();
+            recipe.description = $('.description').val();
+            if (categoryinput != undefined && categoryinput != '') {
+                recipe.categories = categoryinput.split(',').map(string => WebpageHandler.capFirstLetter(string));
+            } else {
+                recipe.categories = undefined;
+            }
+            recipe.portions = $('.portions').val();
+            if ($('.imgsrc').val() != '') {
+                recipe.img = $('.imgsrc').val();
+            }
 
 
-        $('.ingredient_group').each(function () {
-            let $this = $(this);
-            let ingredient = new Ingredient();
-            $this.children('.ingredient_member').each(function () {
-                let input = $(this);
-                let val = input.val();
-                if (val != undefined && val != "") {
-                    if (input.attr('name') == "ingredient_name") {
-                        ingredient.name = WebpageHandler.capFirstLetter(val);
-                    } else if (input.attr('name') == "ingredient") {
-                        ingredient.id = val;
-                    } else if (input.attr('name') == "amount") {
-                        ingredient.amount = val;
-                        ingredient.gram = val;
-                    } else if (input.attr('name') == "unit") {
-                        ingredient.unit = val;
-                    } else if (input.attr('name') == "gram") {
-                        //if unit is gram, no need to fill gram input
-                        if (ingredient.unit != 'g') {
+
+            $('.ingredient_group').each(function () {
+                let $this = $(this);
+                let ingredient = new Ingredient();
+                $this.children('.ingredient_member').each(function () {
+                    let input = $(this);
+                    let val = input.val();
+                    if (val != undefined && val != "") {
+                        if (input.attr('name') == "ingredient_name") {
+                            ingredient.name = WebpageHandler.capFirstLetter(val);
+                        } else if (input.attr('name') == "ingredient") {
+                            ingredient.id = val;
+                        } else if (input.attr('name') == "amount") {
+                            ingredient.amount = val;
                             ingredient.gram = val;
+                        } else if (input.attr('name') == "unit") {
+                            ingredient.unit = val;
+                        } else if (input.attr('name') == "gram") {
+                            //if unit is gram, no need to fill gram input
+                            if (ingredient.unit != 'g') {
+                                ingredient.gram = val;
+                            }
                         }
                     }
+                });
+                //if ingredient exist, check if all inputs is filled out for each ingredient.
+                if (ingredient != undefined) {
+                    //if ingredient exists and all fields are filled, go ahead and push ingredient to ingr list
+                    if (ingredient.name != undefined && ingredient.amount != undefined && ingredient.id != undefined && (ingredient.gram != undefined || ingredient.unit == 'g')) {
+                        ingredients.push(ingredient);
+                        //if ingredient exist and not all fields is filled out, alert! all but unit
+                    } else if (ingredient.name != undefined || ingredient.amount != undefined || ingredient.id != undefined || ingredient.gram != undefined) {
+                        alert('Du måste fylla i alla 3 fält för varje ingredient!');
+                        throw (new Error(`Du måste fylla i alla 3 fält för varje ingredient!`));
+                    }
+
                 }
             });
-            //if ingredient exist, check if all inputs is filled out for each ingredient.
-            if (ingredient != undefined) {
-                //if ingredient exists and all fields are filled, go ahead and push ingredient to ingr list
-                if (ingredient.name != undefined && ingredient.amount != undefined && ingredient.id != undefined && (ingredient.gram != undefined || ingredient.unit == 'g')) {
-                    ingredients.push(ingredient);
-                    //if ingredient exist and not all fields is filled out, alert! all but unit
-                } else if (ingredient.name != undefined || ingredient.amount != undefined || ingredient.id != undefined || ingredient.gram != undefined) {
-                    alert('Du måste fylla i alla 3 fält för varje ingredient!');
-                    throw (new Error(`Du måste fylla i alla 3 fält för varje ingredient!`));
-                }
 
-            }
-        });
+            recipe.ingredients = RecipeHandler.setNutritionValues(ingredients);
+            RecipeHandler.submitRecipe(recipe);
 
-        recipe.ingredients = RecipeHandler.setNutritionValues(ingredients);
-
-        let recipeJson = JSON.stringify(recipe);
-        $.ajax({
-            type: "POST",
-            url: '/submit-recipe',
-            contentType: "application/json",
-            data: recipeJson,
-            success: function (response) {
-                if (response == 'done') {
-                    alert('Ditt recept är tillagt!');
-                }
-            }
-        });
+        }
     }
 
     static showRecipe(recipeName) {
@@ -370,22 +318,7 @@ class WebpageHandler {
     }
 
     static showCategories() {
-        let catObj = {};
-        let getCategories = (function () {
-            let getCategories = null;
-            $.ajax({
-                type: "GET",
-                async: false,
-                url: `/getcategories`,
-                success: function (response) {
-                    if (response != undefined) {
-                        catObj = response;
-                    } else {
-                        return null;
-                    }
-                }
-            });
-        })();
+        let catObj = RecipeHandler.getCategories();
 
         let div = $('.panel-group');
 

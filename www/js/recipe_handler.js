@@ -90,4 +90,70 @@ class RecipeHandler {
             return null
         }
     }
+
+    static deleteRecipe(recepeID) {
+        let resp = false;
+        $.ajax({
+            type: "POST",
+            url: '/delete-recipe',
+            data: recepeID,
+            success: function (response) {
+                if (response == 'done') {
+                    resp = true;
+                }
+            }
+        });
+        return resp;
+    }
+
+    static submitRecipe(recipe) {
+        let recipeJson = JSON.stringify(recipe);
+        $.ajax({
+            type: "POST",
+            url: '/submit-recipe',
+            contentType: "application/json",
+            data: recipeJson,
+            success: function (response) {
+                if (response == 'done') {
+                    alert('Ditt recept är tillagt!');
+                }
+            }
+        });
+    }
+
+    static getCategories() {
+        let catList = {};
+        let getCategories = (function () {
+            let getCategories = null;
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: `/getcategories`,
+                success: function (response) {
+                    if (response != undefined) {
+                        catList = response;
+                    } else {
+                        return null;
+                    }
+                }
+            });
+        })();
+        return catList;
+    }
+
+    static getCategoryList() {
+        let catList = [];
+        let getCategorylist = (function () {
+            let getCategorylist = null;
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: `/getcategorylist`,
+                success: function (response) {
+                    catList = response;
+                }
+            });
+        })();
+        return catList;
+    }
 }

@@ -1,19 +1,25 @@
 module.exports = class Routes {
 
-  constructor(app, nutrition) {
+  constructor(app, fs) {
     this.app = app;
+    this.fs = fs;
     this.setRoutes();
-    this.nutrition = nutrition;
+    this.list = this.getList();
+  }
+
+  getList() {
+    let list = [];
+    let data = this.fs.readFileSync('./www/json/livsmedelsdata.json');
+    data = JSON.parse(data);
+    for (let item of data) {
+      list.push(item.Namn);
+    }
+    return list;
   }
 
   setRoutes() {
-
     const path = require('path');
-    const fs = require('fs');
-
-    this.app.get('/about_us', (req, res) => {
-      res.send('<p>Detta är Dannys aka Juulis receptbok, smaka recepten på egen risk!</p>');
-    });
+    const fs = this.fs;
 
     this.app.get(
       '/', (req, res) => {
@@ -51,25 +57,11 @@ module.exports = class Routes {
         res.send('<p>FEL LÖSEN, ÄR DU HACKARE ELLER!?</p>');
       });
 
-
     this.app.get(
       '/add_recipe?id/:recipeid', (req, res) => {
         res.send('index');
         return res.sendFile(path.join(__dirname + '/www/add_recipe.html'));
       });
-
-    this.app.post(
-      '/authenticate/edit', (req, res) => {
-        const postBody = req.body;
-        if (postBody.user == "Juulis" && postBody.password == "dannyking") {
-          res.set('L')
-          res.redirect(302, '/add_recipe?id/' + req.recipe);
-        } else
-          res.send('<p>FEL LÖSEN, ÄR DU HACKARE ELLER!?</p>');
-      });
-
-
-
 
     this.app.get(
       '/json/searchlist', (req, res) => {
@@ -84,13 +76,7 @@ module.exports = class Routes {
 
     this.app.get(
       '/json/livsmlist', (req, res) => {
-        let list = [];
-        let data = fs.readFileSync('./www/json/livsmedelsdata.json');
-        data = JSON.parse(data);
-        for (let item of data) {
-          list.push(item.Namn);
-        }
-        res.send(list);
+        res.send(this.list);
       });
 
     this.app.post(
@@ -99,6 +85,17 @@ module.exports = class Routes {
         let recepies = JSON.parse(rawData);
         recepies.push(req.body);
         fs.writeFileSync('./www/json/recepies.json', JSON.stringify(recepies));
+        res.send("done");
+      });
+
+    this.app.post(
+      '/delete-recipe', (req, res) => {
+        let rawData = fs.readFileSync('./www/json/recepies.json');
+        let recepies = JSON.parse(rawData);
+        let name = Object.getOwnPropertyNames(req.body)[0];
+        console.log(name);
+        let newRecepies = recepies.filter(el => el._name !== name);
+        fs.writeFileSync('./www/json/recepies.json', JSON.stringify(newRecepies));
         res.send("done");
       });
 
@@ -182,7 +179,7 @@ module.exports = class Routes {
         for (let item of data) {
           if (item._name == req.params.recipeid) {
             found = true;
-            res.send(item);
+            return res.send(item);
           }
         }
         if (found == false) {

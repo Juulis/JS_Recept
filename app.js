@@ -18,10 +18,11 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
+const fs = require('fs');
 let Routes = require('./routes');
 // Require the Routes class - that sets all 
 // REST-like routes
-new Routes(app);
+new Routes(app,fs);
 
 
 // Start the web server on port 3000
