@@ -145,8 +145,6 @@ class WebpageHandler {
                 recipe.img = $('.imgsrc').val();
             }
 
-
-
             $('.ingredient_group').each(function () {
                 let $this = $(this);
                 let ingredient = new Ingredient();
