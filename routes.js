@@ -93,7 +93,6 @@ module.exports = class Routes {
         let rawData = fs.readFileSync('./www/json/recepies.json');
         let recepies = JSON.parse(rawData);
         let name = Object.getOwnPropertyNames(req.body)[0];
-        console.log(name);
         let newRecepies = recepies.filter(el => el._name !== name);
         fs.writeFileSync('./www/json/recepies.json', JSON.stringify(newRecepies));
         res.send("done");
@@ -101,31 +100,22 @@ module.exports = class Routes {
 
     this.app.post(
       '/setnutritions', (req, res) => {
-        let nutrition = {};
         let ingredientList = req.body;
         for (let ingredient of ingredientList) {
-          ingredient.nutrition = setNutrition(ingredient._id, ingredient._gram);
+          ingredient._nutrition = setNutrition(ingredient._id, ingredient._gram);
         }
 
         function setNutrition(ingredientID, amount) {
+          let nutrition = {};
           let rawData = fs.readFileSync('./www/json/livsmedelsdata.json');
           let livsmdata = JSON.parse(rawData);
 
           loop1: for (let item of livsmdata) {
             if (item.Namn == ingredientID) {
               loop2: for (let n of item.Naringsvarden.Naringsvarde) {
-                let val = (Number(n.Varde.replace(',', '.').replace(/\s+/g, '')) / 100) * amount;
-                if (n.Enhet == 'g') {
-                  val = (Number(n.Varde.replace(',', '.').replace(/\s+/g, '')) / 100) * amount;
-                }
-                if (n.Enhet == 'mg') {
-                  val = (Number(n.Varde.replace(',', '.').replace(/\s+/g, '')) / 1000) * amount;
-                }
-                if (n.Enhet == 'µg') {
-                  val = (Number(n.Varde.replace(',', '.').replace(/\s+/g, '')) / 1000000) * amount;
-                }
+                let val = Number(n.Varde.replace(',', '.').replace(/\s+/g, ''));
                 //don't add nutrition if it's 0
-                if (val != 0 && val != undefined) {
+                if (val != 0 && val != undefined && val != '0') {
                   if (n.Namn == "Energi (kcal)") {
                     nutrition.energiKcal = val;
                     continue loop2;

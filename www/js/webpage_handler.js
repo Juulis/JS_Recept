@@ -158,13 +158,14 @@ class WebpageHandler {
                             ingredient.id = val;
                         } else if (input.attr('name') == "amount") {
                             ingredient.amount = val;
-                            ingredient.gram = val;
                         } else if (input.attr('name') == "unit") {
                             ingredient.unit = val;
                         } else if (input.attr('name') == "gram") {
-                            //if unit is gram, no need to fill gram input
+                            //if unit is gram, fill 'gram' with amount
                             if (ingredient.unit != 'g') {
                                 ingredient.gram = val;
+                            } else {
+                                ingredient.gram = ingredient.amount;
                             }
                         }
                     }
@@ -185,7 +186,7 @@ class WebpageHandler {
 
             recipe.ingredients = RecipeHandler.setNutritionValues(ingredients);
             RecipeHandler.submitRecipe(recipe);
-
+            location.assign('/');
         }
     }
 
@@ -215,7 +216,6 @@ class WebpageHandler {
         instrContainer.text('');
         imgContainer.text('');
         headerContainer.text('');
-        let gram = 0;
         //Apply HTML
         if (foundRecipe == true) {
             Object.setPrototypeOf(recipe, Recipe.prototype);
@@ -226,7 +226,6 @@ class WebpageHandler {
             for (const ingredient of ingredients) {
                 let li = $(`<li><span class="display-amount">${ingredient._amount}</span> ${ingredient._unit} ${ingredient._name}</li>`);
                 ol.append(li);
-                gram += Number(ingredient._gram);
             }
 
             ingrContainer.append(ol);
@@ -248,7 +247,6 @@ class WebpageHandler {
             for (let item in nutrObj) {
                 let n = nutrObj[item];
                 if (n != 0 && n != '0' && !isNaN(n)) {
-                    n = (Number(n) / gram) * 100;
                     if (n.toString().length > 5) {
                         let arr = n.toString().split('.');
                         if (arr[1].length > 2) {
@@ -256,7 +254,33 @@ class WebpageHandler {
                         }
                         n = Number(arr[0] + '.' + arr[1]);
                     }
-                    let li = $(`<li>${item}: <span class='nutrli'> ${n}</span></li>`);
+
+                    let u = '';
+                    if (item.includes('kolhydrater')) {
+                        u = 'g';
+                    } else if (item.includes('energi')) {
+                        u = 'kcal';
+                    } else if (item.includes('protein')) {
+                        u = 'g';
+                    } else if (item.includes('fett')) {
+                        u = 'g';
+                    } else if (item.includes('jarn')) {
+                        u = 'mg';
+                        item = 'järn';
+                    } else if (item.includes('vitaminA')) {
+                        u = 'µg';
+                    } else if (item.includes('vitaminB6')) {
+                        u = 'mg';
+                    } else if (item.includes('vitaminB12')) {
+                        u = 'µg';
+                    } else if (item.includes('vitaminC')) {
+                        u = 'mg';
+                    } else if (item.includes('vitaminD')) {
+                        u = 'µg';
+                    } else if (item.includes('vitaminE')) {
+                        u = 'mg';
+                    }
+                    let li = $(`<li>${item}: <span class='nutrli'> ${n} ${u}</span></li>`);
                     ul.append(li);
                 }
             }
