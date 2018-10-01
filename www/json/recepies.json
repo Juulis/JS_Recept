@@ -254,5 +254,106 @@
                 }
             }
         ]
+    },
+    {
+        "_name": "Äggakaga",
+        "_description": "Stek fläsket i en stekpanna. Lyft upp och håll varmt.\nVispa ihop ägg, mjöl, mjölk, salt och peppar till en slät smet. Häll smeten i den varma stekpannan. ...\nLägg i smör i stekpannan och låt äggakakan försiktigt glida tillbaka i stekpannan. ...\nStjälp upp kakan och servera med fläsket och lingonsylt.",
+        "_categories": [
+            "Lunch"
+        ],
+        "_portions": "4",
+        "_img": "https://www.ica.se//icase.azureedge.net/imagevaultfiles/id_18877/cf_259/676422-aggkaka_10.jpg",
+        "_ingredients": [
+            {
+                "_id": "Gris sidfläsk el stekfläsk rimmat i skivor rå",
+                "_name": "Rimmat fläsk",
+                "_amount": "400",
+                "_unit": "g",
+                "_nutrition": {
+                    "energiKcal": 353,
+                    "protein": 11.6,
+                    "fett": 34.6,
+                    "jarn": 0.5,
+                    "vitaminA": 9,
+                    "vitaminD": 0.48,
+                    "vitaminE": 0.4,
+                    "vitaminB12": 0.4,
+                    "vitaminB6": 0.28
+                }
+            },
+            {
+                "_id": "Ägg konventionellt rått",
+                "_name": "Ägg",
+                "_amount": "7",
+                "_unit": "st",
+                "_gram": "420",
+                "_nutrition": {
+                    "energiKcal": 137,
+                    "kolhydrater": 0.4,
+                    "protein": 12.25,
+                    "fett": 9.73,
+                    "jarn": 1.68,
+                    "vitaminA": 233.2,
+                    "vitaminD": 1.43,
+                    "vitaminE": 5.57,
+                    "vitaminB12": 1.47,
+                    "vitaminB6": 0.1
+                }
+            },
+            {
+                "_id": "Vetemjöl",
+                "_name": "Mjöl",
+                "_amount": "1.5",
+                "_unit": "dl",
+                "_gram": "150",
+                "_nutrition": {
+                    "energiKcal": 352,
+                    "kolhydrater": 72.4,
+                    "protein": 8.47,
+                    "fett": 1.88,
+                    "jarn": 0.7,
+                    "vitaminA": 0.8,
+                    "vitaminE": 0.4,
+                    "vitaminC": 2.3,
+                    "vitaminB6": 0.11
+                }
+            },
+            {
+                "_id": "Mjölk fett 3%",
+                "_name": "Mjölk",
+                "_amount": "6",
+                "_unit": "dl",
+                "_gram": "600",
+                "_nutrition": {
+                    "energiKcal": 60,
+                    "kolhydrater": 4.7,
+                    "protein": 3.51,
+                    "fett": 3,
+                    "jarn": 0.02,
+                    "vitaminA": 27.7,
+                    "vitaminD": 1,
+                    "vitaminE": 0.08,
+                    "vitaminC": 0.6,
+                    "vitaminB12": 0.58,
+                    "vitaminB6": 0.04
+                }
+            },
+            {
+                "_id": "Smör fett 80 %",
+                "_name": "Smör",
+                "_amount": "1",
+                "_unit": "msk",
+                "_gram": "25",
+                "_nutrition": {
+                    "energiKcal": 729,
+                    "kolhydrater": 0.5,
+                    "protein": 0.4,
+                    "fett": 82,
+                    "vitaminA": 619.9,
+                    "vitaminD": 0.51,
+                    "vitaminE": 2.1
+                }
+            }
+        ]
     }
 ]

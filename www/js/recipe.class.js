@@ -16,17 +16,17 @@ class Recipe {
     for (let item of this.ingredients) {
       Object.setPrototypeOf(item, Ingredient.prototype);
       let proportion = Number(item.gram) / amountSum;
-      item.nutrition.vitaminA != 0 || '0' ? nutritionSum.vitaminA += (proportion * (item.nutrition.vitaminA / 1000000)) * 1000000 : false;
-      item.nutrition.vitaminB6 != 0 || '0' ? nutritionSum.vitaminB6 += (proportion * (item.nutrition.vitaminB6 / 1000)) * 1000 : false;
-      item.nutrition.vitaminB12 != 0 || '0' ? nutritionSum.vitaminB12 += (proportion * (item.nutrition.vitaminB12 / 1000000)) * 1000000 : false;
-      item.nutrition.vitaminC != 0 || '0' ? nutritionSum.vitaminC += (proportion * (item.nutrition.vitaminC / 1000)) * 1000 : false;
-      item.nutrition.vitaminD != 0 || '0' ? nutritionSum.vitaminD += (proportion * (item.nutrition.vitaminD / 1000000)) * 1000000 : false;
-      item.nutrition.vitaminE != 0 || '0' ? nutritionSum.vitaminE += (proportion * (item.nutrition.vitaminE / 1000)) * 1000 : false;
-      item.nutrition.energiKcal != 0 || '0' ? nutritionSum.energiKcal += proportion * item.nutrition.energiKcal : false;
-      item.nutrition.kolhydrater != 0 || '0' ? nutritionSum.kolhydrater += proportion * item.nutrition.kolhydrater : false;
-      item.nutrition.protein != 0 || '0' ? nutritionSum.protein += proportion * item.nutrition.protein : false;
-      item.nutrition.fett != 0 || '0' ? nutritionSum.fett += proportion * item.nutrition.fett : false;
-      item.nutrition.jarn != 0 || '0' ? nutritionSum.jarn += (proportion * (item.nutrition.jarn / 1000)) * 1000 : false;
+      item.nutrition.vitaminA != undefined ? nutritionSum.vitaminA += (proportion * (item.nutrition.vitaminA / 1000000)) * 1000000 : false;
+      item.nutrition.vitaminB6 != undefined ? nutritionSum.vitaminB6 += (proportion * (item.nutrition.vitaminB6 / 1000)) * 1000 : false;
+      item.nutrition.vitaminB12 != undefined ? nutritionSum.vitaminB12 += (proportion * (item.nutrition.vitaminB12 / 1000000)) * 1000000 : false;
+      item.nutrition.vitaminC != undefined ? nutritionSum.vitaminC += (proportion * (item.nutrition.vitaminC / 1000)) * 1000 : false;
+      item.nutrition.vitaminD != undefined ? nutritionSum.vitaminD += (proportion * (item.nutrition.vitaminD / 1000000)) * 1000000 : false;
+      item.nutrition.vitaminE != undefined ? nutritionSum.vitaminE += (proportion * (item.nutrition.vitaminE / 1000)) * 1000 : false;
+      item.nutrition.energiKcal != undefined ? nutritionSum.energiKcal += proportion * item.nutrition.energiKcal : false;
+      item.nutrition.kolhydrater != undefined ? nutritionSum.kolhydrater += proportion * item.nutrition.kolhydrater : false;
+      item.nutrition.protein != undefined ? nutritionSum.protein += proportion * item.nutrition.protein : false;
+      item.nutrition.fett != undefined ? nutritionSum.fett += proportion * item.nutrition.fett : false;
+      item.nutrition.jarn != undefined ? nutritionSum.jarn += (proportion * (item.nutrition.jarn / 1000)) * 1000 : false;
     }
     return nutritionSum;
   }

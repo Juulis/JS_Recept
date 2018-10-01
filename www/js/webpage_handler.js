@@ -241,16 +241,17 @@ class WebpageHandler {
             $('#edit-recipe-id').val(recipe.name);
 
             //setup nutrition display
+            let decimals = 3;
             let nutrdiv = $('#collapseExample div');
             let nutrObj = recipe.nutrition;
             let ul = $('<ul></ul>');
             for (let item in nutrObj) {
                 let n = nutrObj[item];
                 if (n != 0 && n != '0' && !isNaN(n)) {
-                    if (n.toString().length > 5) {
+                    if (n.toString().length > decimals) {
                         let arr = n.toString().split('.');
                         if (arr[1].length > 2) {
-                            arr[1] = arr[1].substring(0, 5);
+                            arr[1] = arr[1].substring(0, decimals);
                         }
                         n = Number(arr[0] + '.' + arr[1]);
                     }

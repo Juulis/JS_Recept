@@ -101,17 +101,12 @@ module.exports = class Routes {
     this.app.post(
       '/setnutritions', (req, res) => {
         let ingredientList = req.body;
-        for (let ingredient of ingredientList) {
-          ingredient._nutrition = setNutrition(ingredient._id);
-        }
-
-        function setNutrition(ingredientID) {
-          let nutrition = {};
           let rawData = fs.readFileSync('./www/json/livsmedelsdata.json');
           let livsmdata = JSON.parse(rawData);
-
+        for (let ingredient of ingredientList) {
+          let nutrition = {};
           loop1: for (let item of livsmdata) {
-            if (item.Namn == ingredientID) {
+            if (item.Namn == ingredient._id) {
               loop2: for (let n of item.Naringsvarden.Naringsvarde) {
                 let val = Number(n.Varde.replace(',', '.').replace(/\s+/g, ''));
                 //don't add nutrition if it's 0
@@ -155,7 +150,7 @@ module.exports = class Routes {
               break loop1;
             }
           }
-          return nutrition;
+          ingredient._nutrition = nutrition;
         }
         res.send(ingredientList);
       });
