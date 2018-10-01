@@ -62,7 +62,9 @@ body {
 
 /* Header
 -----------------------------------------------------------------------------*/
-
+#about_us{
+    cursor:pointer;
+}
 .header {
     height: 104px;
     background: #FFE680;

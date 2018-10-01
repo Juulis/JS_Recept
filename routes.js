@@ -102,10 +102,10 @@ module.exports = class Routes {
       '/setnutritions', (req, res) => {
         let ingredientList = req.body;
         for (let ingredient of ingredientList) {
-          ingredient._nutrition = setNutrition(ingredient._id, ingredient._gram);
+          ingredient._nutrition = setNutrition(ingredient._id);
         }
 
-        function setNutrition(ingredientID, amount) {
+        function setNutrition(ingredientID) {
           let nutrition = {};
           let rawData = fs.readFileSync('./www/json/livsmedelsdata.json');
           let livsmdata = JSON.parse(rawData);
@@ -203,5 +203,8 @@ module.exports = class Routes {
         res.send(categories);
       });
 
+    this.app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, './www/index.html'));
+    });
   }
 }

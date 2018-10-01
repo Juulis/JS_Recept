@@ -8,26 +8,25 @@ class Recipe {
     let nutritionSum = new Nutrition();
     let amountSum = 0;
     for (let item of this.ingredients) {
-      if(item._gram == undefined){
+      if (item._gram == undefined) {
         item._gram = item._amount;
       }
       amountSum += Number(item._gram);
     }
-    console.log(amountSum);
     for (let item of this.ingredients) {
       Object.setPrototypeOf(item, Ingredient.prototype);
-      console.log('vitA:', nutritionSum.vitaminA, '+',item._name,'vitA', item.nutrition.vitaminA);
-      item.nutrition.vitaminA != 0 || '0' ? nutritionSum.vitaminA += (item.nutrition.vitaminA / amountSum) : false;
-      item.nutrition.vitaminB6 != 0 || '0' ? nutritionSum.vitaminB6 += (item.nutrition.vitaminB6 / amountSum) : false;
-      item.nutrition.vitaminB12 != 0 || '0' ? nutritionSum.vitaminB12 += (item.nutrition.vitaminB12 / amountSum) : false;
-      item.nutrition.vitaminC != 0 || '0' ? nutritionSum.vitaminC += (item.nutrition.vitaminC / amountSum) : false;
-      item.nutrition.vitaminD != 0 || '0' ? nutritionSum.vitaminD += (item.nutrition.vitaminD / amountSum) : false;
-      item.nutrition.vitaminD != 0 || '0' ? nutritionSum.vitaminE += (item.nutrition.vitaminE / amountSum) : false;
-      item.nutrition.energiKcal != 0 || '0' ? nutritionSum.energiKcal += (item.nutrition.energiKcal / amountSum) : false;
-      item.nutrition.kolhydrater != 0 || '0' ? nutritionSum.kolhydrater += (item.nutrition.kolhydrater / amountSum) : false;
-      item.nutrition.protein != 0 || '0' ? nutritionSum.protein += (item.nutrition.protein / amountSum) : false;
-      item.nutrition.fett != 0 || '0' ? nutritionSum.fett += (item.nutrition.fett / amountSum) : false;
-      item.nutrition.jarn != 0 || '0' ? nutritionSum.jarn += (item.nutrition.jarn / amountSum) : false;
+      let proportion = Number(item.gram) / amountSum;
+      item.nutrition.vitaminA != 0 || '0' ? nutritionSum.vitaminA += (proportion * (item.nutrition.vitaminA / 1000000)) * 1000000 : false;
+      item.nutrition.vitaminB6 != 0 || '0' ? nutritionSum.vitaminB6 += (proportion * (item.nutrition.vitaminB6 / 1000)) * 1000 : false;
+      item.nutrition.vitaminB12 != 0 || '0' ? nutritionSum.vitaminB12 += (proportion * (item.nutrition.vitaminB12 / 1000000)) * 1000000 : false;
+      item.nutrition.vitaminC != 0 || '0' ? nutritionSum.vitaminC += (proportion * (item.nutrition.vitaminC / 1000)) * 1000 : false;
+      item.nutrition.vitaminD != 0 || '0' ? nutritionSum.vitaminD += (proportion * (item.nutrition.vitaminD / 1000000)) * 1000000 : false;
+      item.nutrition.vitaminE != 0 || '0' ? nutritionSum.vitaminE += (proportion * (item.nutrition.vitaminE / 1000)) * 1000 : false;
+      item.nutrition.energiKcal != 0 || '0' ? nutritionSum.energiKcal += proportion * item.nutrition.energiKcal : false;
+      item.nutrition.kolhydrater != 0 || '0' ? nutritionSum.kolhydrater += proportion * item.nutrition.kolhydrater : false;
+      item.nutrition.protein != 0 || '0' ? nutritionSum.protein += proportion * item.nutrition.protein : false;
+      item.nutrition.fett != 0 || '0' ? nutritionSum.fett += proportion * item.nutrition.fett : false;
+      item.nutrition.jarn != 0 || '0' ? nutritionSum.jarn += (proportion * (item.nutrition.jarn / 1000)) * 1000 : false;
     }
     return nutritionSum;
   }
