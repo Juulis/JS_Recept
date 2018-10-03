@@ -1,4 +1,4 @@
-WebpageHandler.addOptions();
+WebpageHandler.addOptions('all');
 
 $('#add_recipe_field').on('click', WebpageHandler.addRecipeField);
 

@@ -1,14 +1,18 @@
 class WebpageHandler {
 
-    static addOptions() {
+    static addOptions(arg) {
         let units = ["dl", "cl", "ml", "msk", "krdm", "kg", "g", "st", "liter"];
         let unitString = "";
 
         units.forEach(function (unit) {
             unitString += '<option value="' + unit + '">' + unit + '</option>';
         });
-
-        let element = $('.unit');
+        let element;
+        if (arg == 'all') {
+            element = $('.unit');
+        } else {
+            element = $('.unit').last();
+        }
         element.text("");
         element.append(unitString);
     }
@@ -25,7 +29,7 @@ class WebpageHandler {
         <hr>
         </div>
         `);
-        WebpageHandler.addOptions();
+        WebpageHandler.addOptions('last');
         $('.ingredient').on('focus', WebpageHandler.autoCompleteIngredient);
     }
 
@@ -375,7 +379,7 @@ class WebpageHandler {
         }
     }
 
-    static showAbout(){
+    static showAbout() {
         let main = $('main');
         main.text('');
         let p = $('<p><BR><BR><BR><HR>Detta är en websida skapad för en uppgift i skolan. Vi ska bygga en webapp med JS som ska skapa och visa recept.<BR> Sidan ska även jobba med JSON filer och hämta/skriva data till dessa.<BR><BR><BR> <b    >Denna sida är skapad av Danny P aka Juulis!<b><HR></p>');
