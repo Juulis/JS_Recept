@@ -18,12 +18,12 @@ class WebpageHandler {
     }
 
     static hideGram(select) {
-        if(select.value == 'g')
-        $(select).parent().children('.gram').prop('disabled', true);
+        if (select.value == 'g')
+            $(select).parent().children('.gram').prop('disabled', true);
         else {
-        $(select).parent().children('.gram').prop('disabled', false);
-            
+            $(select).parent().children('.gram').prop('disabled', false);
         }
+        console.log('hide');
     }
 
     static addRecipeField() {
@@ -39,6 +39,9 @@ class WebpageHandler {
         </div>
         `);
         WebpageHandler.addOptions('last');
+        $('.unit').on('change', function () {
+            WebpageHandler.hideGram(this);
+        });
         $('.ingredient').on('focus', WebpageHandler.autoCompleteIngredient);
     }
 
