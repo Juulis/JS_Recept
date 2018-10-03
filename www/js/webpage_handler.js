@@ -207,7 +207,7 @@ class WebpageHandler {
         let nutrButton = $(`
             <p>
                 <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                Nutritions
+                Näringsvärden
                 </a>
             </p>
             <div class="collapse" id="collapseExample">
@@ -245,7 +245,7 @@ class WebpageHandler {
             $('#edit-recipe-id').val(recipe.name);
 
             //setup nutrition display
-            let decimals = 3;
+            let decimals = 2;
             let nutrdiv = $('#collapseExample div');
             let nutrObj = recipe.nutrition;
             let ul = $('<ul></ul>');
@@ -257,7 +257,7 @@ class WebpageHandler {
                         if (arr[1].length > 2) {
                             arr[1] = arr[1].substring(0, decimals);
                         }
-                        n = Number(arr[0] + '.' + arr[1]);
+                        n = arr[0] + ',' + arr[1];
                     }
 
                     let u = '';
