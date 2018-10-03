@@ -17,6 +17,15 @@ class WebpageHandler {
         element.append(unitString);
     }
 
+    static hideGram(select) {
+        if(select.value == 'g')
+        $(select).parent().children('.gram').prop('disabled', true);
+        else {
+        $(select).parent().children('.gram').prop('disabled', false);
+            
+        }
+    }
+
     static addRecipeField() {
         $('.ingredient_group').last().after(`
         <div class="ingredient_group">

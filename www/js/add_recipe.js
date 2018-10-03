@@ -11,3 +11,7 @@ $('.categories').on('focus', WebpageHandler.autoCompleteCat);
 $('#editbtn').on('click', WebpageHandler.editRecipe);
 
 $('.recipe_name').on('focus', WebpageHandler.autoCompleteName);
+
+$('.unit').on('change', function () {
+    WebpageHandler.hideGram(this);
+});
